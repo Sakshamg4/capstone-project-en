@@ -79,16 +79,17 @@ Use ONLY real companies and universities in {country}. All content in English.""
         result["lang"] = lang
     return result
 
-
 def _rnd_phone(country):
     if country == "France":
         return f"+33 6 {random.randint(10,99)} {random.randint(10,99)} {random.randint(10,99)} {random.randint(10,99)}"
     elif country == "Belgique":
         return f"+32 4{random.randint(70,99)} {random.randint(10,99)} {random.randint(10,99)} {random.randint(10,99)}"
     elif country == "Ghana":
-        return f"+233 {random.choice(["24","20","26","27","54","55"])} {random.randint(100,999)} {random.randint(1000,9999)}"
+        prefix = random.choice(["24","20","26","27","54","55"])
+        return f"+233 {prefix} {random.randint(100,999)} {random.randint(1000,9999)}"
     elif country == "Ireland":
-        return f"+353 8{random.choice(["3","5","6","7"])} {random.randint(100,999)} {random.randint(1000,9999)}"
+        prefix = random.choice(["3","5","6","7"])
+        return f"+353 8{prefix} {random.randint(100,999)} {random.randint(1000,9999)}"
     return f"+33 6 {random.randint(10,99)} {random.randint(10,99)} {random.randint(10,99)} {random.randint(10,99)}"
 
 POOL = {
