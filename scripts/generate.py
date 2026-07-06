@@ -31,7 +31,7 @@ def fill_tf(tf, items):
 
 # ═══ 1. PRESENTATION ═══
 def gen_pptx(name, d, lang):
-    is_fr = lang == "en"
+    is_fr = lang == "fr"
     template = TDIR / ("presentation_template_en.pptx" if is_fr else "presentation_template_en.pptx")
     prs = Presentation(str(template))
     o1, o2 = d["opportunity1"], d["opportunity2"]
@@ -107,7 +107,7 @@ def gen_pptx(name, d, lang):
 
 # ═══ 2. CAPSTONE DOCUMENT ═══
 def gen_docx(name, d, lang):
-    is_fr = lang == "en"
+    is_fr = lang == "fr"
     template = TDIR / ("capstone_template_en.docx" if is_fr else "capstone_template_en.docx")
     doc = Document(str(template))
     
