@@ -1,0 +1,8 @@
+node_modules
+venv
+.venv
+.env
+scripts/output
+scripts/__pycache__
+client/dist
+*.zip
