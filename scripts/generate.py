@@ -102,6 +102,13 @@ def gen_pptx(name, d, lang):
             if len(bs) >= 2:
                 fill_tf(bs[0][1], c["l"]); fill_tf(bs[1][1], c["r"])
     
+    # Clean metadata - set author to user
+    prs.core_properties.author = name
+    prs.core_properties.last_modified_by = name
+    prs.core_properties.title = f'Green Pathways Capstone - {name}'
+    prs.core_properties.comments = ''
+    prs.core_properties.subject = 'Green Pathways Capstone Project'
+    
     out = OUT / f"Presentation_{name.replace(' ','_')}.pptx"
     prs.save(str(out)); return out
 
@@ -136,6 +143,12 @@ def gen_docx(name, d, lang):
         cell.paragraphs[0].clear()
         r = cell.paragraphs[0].add_run(d["cv_improvements"])
         r.font.name = "Sora"; r.font.size = DPt(10)
+    
+    # Clean metadata
+    doc.core_properties.author = name
+    doc.core_properties.last_modified_by = name
+    doc.core_properties.title = f'Green Pathways Capstone - {name}'
+    doc.core_properties.comments = ''
     
     out = OUT / f"Capstone_Document_{name.replace(' ','_')}.docx"
     doc.save(str(out)); return out
