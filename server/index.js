@@ -6,7 +6,7 @@ app.use(cors()); app.use(express.json());
 function findPython() { const r = path.join(__dirname, ".."); for (const p of [r + "/venv/bin/python3", r + "/venv/Scripts/python.exe", r + "/.venv/bin/python3"]) if (fs.existsSync(p)) return p; return "python3"; }
 const PY = findPython(); console.log("🐍 Python:", PY);
 if (process.env.NODE_ENV === "production") app.use(express.static(path.join(__dirname, "../client/dist")));
-app.get("/api/health", (q, r) => r.json({ status: "ok", ai: !!(process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY) }));
+app.get("/api/health", (q, r) => r.json({ status: "ok", ai: false }));
 app.post("/api/preview", (req, res) => {
   const { name, email, country } = req.body;
   if (!name || name.trim().length < 2) return res.status(400).json({ error: "Name too short" });

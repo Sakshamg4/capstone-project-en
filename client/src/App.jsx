@@ -76,7 +76,6 @@ export default function App() {
         <div style={{...S.badge,borderColor:ac+"33",color:ac}}>🌱 Green Pathways</div>
         <h1 style={S.h1}>{t.title}</h1>
         <p style={S.sub}>{t.sub}</p>
-        {aiOn!==null&&<div style={{...S.pill,background:aiOn?"#05966910":"#dc262610",color:aiOn?"#059669":"#dc2626"}}>{aiOn?"✦ AI Connected":"○ Fallback Mode"}</div>}
       </div>
       <div style={{...S.card,borderColor:ac+"12"}}>
         <label style={S.label}>{t.country}</label>

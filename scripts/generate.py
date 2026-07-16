@@ -15,7 +15,7 @@ try:
 except ImportError:
     print("Run: pip install python-pptx python-docx lxml"); sys.exit(1)
 
-from groq_client import generate_content, fallback_content
+from groq_client import generate_content
 from cv_engine import build_cv
 
 BASE = Path(__file__).parent
@@ -166,20 +166,11 @@ def main():
     print(f"🌱 {name} | {flags.get(country, '')} {country} | EN")
     print(f"{'='*50}")
     
-    print("\n🤖 Generating content via AI...")
-    data = None
-    try:
-        data = generate_content(name, email, country, lang)
-    except Exception as e:
-        print(f"  ⚠ AI error: {e}")
-    
-    if not data:
-        print("  ⚠ AI unavailable, using fallback")
-        data = fallback_content(name, email, country, lang)
-    else:
-        print(f"   ✅ AI content ready")
-        print(f"   🏢 {data['opportunity1']['company']} + {data['opportunity2']['company']}")
-        print(f"   🎓 {data['education']['university']}")
+    print("\n🌱 Generating content from database...")
+    data = generate_content(name, email, country, lang)
+    print(f"   ✅ Content ready")
+    print(f"   🏢 {data['opportunity1']['company']} + {data['opportunity2']['company']}")
+    print(f"   🎓 {data['education']['university']}")
     
     OUT.mkdir(exist_ok=True)
     

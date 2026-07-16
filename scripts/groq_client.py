@@ -1,83 +1,7 @@
 """
-Capstone Content Generator — Gemini + Groq + Rich Fallback
+Capstone Content Generator — Offline Structured Database
 """
-import json, os, urllib.request, urllib.error, random, string
-
-GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
-GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
-
-def call_ai(prompt):
-    if GEMINI_KEY:
-        return _call_gemini(prompt)
-    elif GROQ_KEY:
-        return _call_groq(prompt)
-    else:
-        raise ValueError("No API key set")
-
-def _call_gemini(prompt):
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_KEY}"
-    body = json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"temperature":0.9,"maxOutputTokens":3000}}).encode("utf-8")
-    req = urllib.request.Request(url, data=body, headers={"Content-Type":"application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            text = data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
-            elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
-            return json.loads(text)
-    except Exception as e:
-        print(f"  ⚠ Gemini error: {e}")
-        return None
-
-def _call_groq(prompt):
-    url = "https://api.groq.com/openai/v1/chat/completions"
-    body = json.dumps({"model":"llama-3.3-70b-versatile","messages":[{"role":"user","content":prompt}],"max_tokens":3000,"temperature":0.9}).encode("utf-8")
-    req = urllib.request.Request(url, data=body, headers={"Content-Type":"application/json","Authorization":f"Bearer {GROQ_KEY}"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            text = data["choices"][0]["message"]["content"].strip()
-            if "```json" in text: text = text.split("```json")[1].split("```")[0].strip()
-            elif "```" in text: text = text.split("```")[1].split("```")[0].strip()
-            return json.loads(text)
-    except Exception as e:
-        print(f"  ⚠ Groq error: {e}")
-        return None
-
-
-def generate_content(name, email, country, lang):
-    prompt = f"""Generate realistic capstone project content for a Green Pathways (INCO) student applying for renewable energy internships.
-RESPOND ONLY IN VALID JSON. No other text.
-Student: {name}, Email: {email}, Country: {country}
-Language: ALL text in English
-
-Generate this JSON:
-{{
-  "phone": "realistic local phone number for {country} (full number, no XX)",
-  "city": "real mid-sized city in {country}",
-  "address": "realistic street address",
-  "opportunity1": {{"company":"real renewable energy company in {country}","position":"internship title","location":"city/region","description":"2-3 sentences","skills":["4 skills"],"qualification":"education level","my_experience":["4 bullet points"]}},
-  "opportunity2": {{"company":"different company","position":"different title","location":"different city","description":"2-3 sentences","skills":["4 skills"],"qualification":"education level","my_experience":["4 bullet points"]}},
-  "education": {{"degree":"bachelor's degree name","university":"real university in {country}","specialization":"specific track","project":"1 sentence project","secondary_school":"real school","secondary_spec":"subjects","grade":"realistic grade"}},
-  "experience": {{"volunteer_org":"real environmental NGO","volunteer_bullets":["3 activities"],"placement_org":"real government org","placement_bullets":["2 activities"]}},
-  "cv_skills": {{"left":["4 technical skills"],"right":["4 soft skills"]}},
-  "languages": ["2-3 languages with levels"],
-  "interests": "4 interests with bullet separators",
-  "profile_summary": "3-sentence professional profile",
-  "capstone_summary": "250-300 word detailed summary mentioning both opportunities and career goals",
-  "cv_improvements": "3 numbered improvements",
-  "next_steps_immediate": ["4 action items"],
-  "next_steps_medium": ["4 development goals"]
-}}
-Use ONLY real companies and universities in {country}. All content in English."""
-    
-    result = call_ai(prompt)
-    if result:
-        result["name"] = " ".join(name.split())
-        result["email"] = email
-        result["country"] = country
-        result["lang"] = lang
-    return result
+import random
 
 
 def _rnd_phone(country):
@@ -328,7 +252,7 @@ PROJECTS = ["Feasibility study of a community solar farm","Urban air quality ana
 GRADES = ["First Class Honours","Upper Second Class Honours","2:1 Honours","Distinction","Merit"]
 
 
-def fallback_content(name, email, country, lang):
+def generate_content(name, email, country, lang="en"):
     name = " ".join(name.split())
     pool = POOL.get(country, POOL["France"])
     
