@@ -31,22 +31,21 @@ def fill_tf(tf, items):
 
 # ═══ 1. PRESENTATION ═══
 def gen_pptx(name, d, lang):
-    is_fr = lang == "fr"
-    template = TDIR / ("presentation_template_en.pptx" if is_fr else "presentation_template_en.pptx")
+    template = TDIR / "presentation_template_en.pptx"
     prs = Presentation(str(template))
     o1, o2 = d["opportunity1"], d["opportunity2"]
     
-    # Slide 0: Title — replace Name/Nom and Date
+    # Slide 0: Title — replace Name and Date
     for sh in prs.slides[0].shapes:
         if sh.has_text_frame:
             for p in sh.text_frame.paragraphs:
                 for r in p.runs:
                     t = r.text.strip()
-                    if t in ("Nom", "Name"): r.text = name
-                    elif t == "Date": r.text = "June 2026" if not is_fr else "Juin 2026"
+                    if t == "Name": r.text = name
+                    elif t == "Date": r.text = "July 2026"
     
     # EN has Executive Summary at slide index 1 — fill it
-    if not is_fr and len(prs.slides) >= 12:
+    if len(prs.slides) >= 12:
         for sh in prs.slides[1].shapes:
             if sh.has_text_frame:
                 tf = sh.text_frame
@@ -59,34 +58,32 @@ def gen_pptx(name, d, lang):
                     break
     
     db = RGBColor(0x1B, 0x3C, 0x6D)
-    opp = "Opportunité" if is_fr else "Opportunity"
-    pos = "Poste" if is_fr else "Position"
-    loc = "Lieu" if is_fr else "Location"
-    dur = "Durée : 6 mois (dès septembre 2026)" if is_fr else "Duration: 6 months (from September 2026)"
+    opp = "Opportunity"
+    pos = "Position"
+    loc = "Location"
+    dur = "Duration: 6 months (from September 2026)"
     
-    # Content slide indices: FR=[3,5,7,9], EN=[4,6,8,10]
-    if is_fr:
-        ci = [3, 5, 7, 9]
-    else:
-        ci = [4, 6, 8, 10]
+    # Content slide indices: both languages must use the student answer slides
+    # (Slides 5, 7, 9, and 11 which correspond to indices 4, 6, 8, 10 in 0-indexed)
+    ci = [4, 6, 8, 10]
     
     slide_content = [
         # Opportunities
-        {"t": "Deux opportunités en énergies renouvelables" if is_fr else "Two renewable energy opportunities",
+        {"t": "Two renewable energy opportunities",
          "l": [(True, f"{opp} 1 : {o1['company']}"), (False, f"{pos} : {o1['position']}"), (False, f"{loc} : {o1['location']}"), (False, dur), (False, o1['description'])],
          "r": [(True, f"{opp} 2 : {o2['company']}"), (False, f"{pos} : {o2['position']}"), (False, f"{loc} : {o2['location']}"), (False, dur), (False, o2['description'])]},
         # Skills
-        {"t": "Compétences et formations requises" if is_fr else "Required skills and qualifications",
-         "l": [(True, f"{o1['company']} — {'Compétences' if is_fr else 'Skills'}")] + [(False, f"• {s}") for s in o1['skills']] + [(True, "Formation requise" if is_fr else "Required qualification"), (False, o1['qualification'])],
-         "r": [(True, f"{o2['company']} — {'Compétences' if is_fr else 'Skills'}")] + [(False, f"• {s}") for s in o2['skills']] + [(True, "Formation requise" if is_fr else "Required qualification"), (False, o2['qualification'])]},
+        {"t": "Required skills and qualifications",
+         "l": [(True, f"{o1['company']} — Skills")] + [(False, f"• {s}") for s in o1['skills']] + [(True, "Required qualification"), (False, o1['qualification'])],
+         "r": [(True, f"{o2['company']} — Skills")] + [(False, f"• {s}") for s in o2['skills']] + [(True, "Required qualification"), (False, o2['qualification'])]},
         # Experience
-        {"t": "Mon expérience et compétences transférables" if is_fr else "My experience and transferable skills",
-         "l": [(True, f"{'Pour' if is_fr else 'For'} {o1['company']}")] + [(False, f"• {e}") for e in o1['my_experience']],
-         "r": [(True, f"{'Pour' if is_fr else 'For'} {o2['company']}")] + [(False, f"• {e}") for e in o2['my_experience']]},
+        {"t": "My experience and transferable skills",
+         "l": [(True, f"For {o1['company']}")] + [(False, f"• {e}") for e in o1['my_experience']],
+         "r": [(True, f"For {o2['company']}")] + [(False, f"• {e}") for e in o2['my_experience']]},
         # Next Steps
-        {"t": "Mes prochaines étapes" if is_fr else "My next steps",
-         "l": [(True, "Actions immédiates (été 2026)" if is_fr else "Immediate actions (Summer 2026)")] + [(False, f"• {x}") for x in d['next_steps_immediate']],
-         "r": [(True, "Développement à moyen terme" if is_fr else "Medium-term development")] + [(False, f"• {x}") for x in d['next_steps_medium']]},
+        {"t": "My next steps",
+         "l": [(True, "Immediate actions (Summer 2026)")] + [(False, f"• {x}") for x in d['next_steps_immediate']],
+         "r": [(True, "Medium-term development")] + [(False, f"• {x}") for x in d['next_steps_medium']]},
     ]
     
     for idx, c in zip(ci, slide_content):
@@ -114,8 +111,7 @@ def gen_pptx(name, d, lang):
 
 # ═══ 2. CAPSTONE DOCUMENT ═══
 def gen_docx(name, d, lang):
-    is_fr = lang == "fr"
-    template = TDIR / ("capstone_template_en.docx" if is_fr else "capstone_template_en.docx")
+    template = TDIR / "capstone_template_en.docx"
     doc = Document(str(template))
     
     # Put name on RIGHT side of table
@@ -124,7 +120,7 @@ def gen_docx(name, d, lang):
             cells = row.cells
             if len(cells) >= 2:
                 left = cells[0].text.strip()
-                if "Prénom" in left or "NOM" in left or "Your Name" in left or "Name" in left:
+                if "Your Name" in left or "Name" in left:
                     cells[1].paragraphs[0].clear()
                     r = cells[1].paragraphs[0].add_run(name)
                     r.font.name = "Sora"; r.font.size = DPt(14)
@@ -155,21 +151,19 @@ def gen_docx(name, d, lang):
 
 # ═══ MAIN ═══
 def main():
-    if len(sys.argv) >= 5:
-        name, email, country, lang = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-    elif len(sys.argv) >= 4:
-        name, email, country, lang = sys.argv[1], sys.argv[2], sys.argv[3], "en"
+    if len(sys.argv) >= 4:
+        name, email, country = sys.argv[1], sys.argv[2], sys.argv[3]
     elif len(sys.argv) >= 3:
-        name, email, country, lang = sys.argv[1], sys.argv[2], "France", "en"
+        name, email, country = sys.argv[1], sys.argv[2], "France"
     else:
-        print('Usage: python generate.py "Name" "email" "Country" "fr|en"'); sys.exit(1)
+        print('Usage: python generate.py "Name" "email" "Country"'); sys.exit(1)
     
     name = " ".join(name.split())
-    if lang not in ("en", "en"): lang = "en"
+    lang = "en"
     
     flags = {"France": "🇫🇷", "Belgique": "🇧🇪", "Ghana": "🇬🇭", "Ireland": "🇮🇪"}
     print(f"\n{'='*50}")
-    print(f"🌱 {name} | {flags.get(country, '')} {country} | {'FR' if lang == 'fr' else 'EN'}")
+    print(f"🌱 {name} | {flags.get(country, '')} {country} | EN")
     print(f"{'='*50}")
     
     print("\n🤖 Generating content via AI...")

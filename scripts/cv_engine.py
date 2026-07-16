@@ -227,39 +227,38 @@ def build_cv(data, output_path):
     cv = CVBuilder()
     d = data
     name = " ".join(d["name"].split())
-    is_fr = d.get("lang","fr") == "fr"
     
     cv.add_name(name, d["email"], d["phone"], d["city"])
     
-    cv.add_section("Profil" if is_fr else "Profile")
+    cv.add_section("Profile")
     cv.add_text(d["profile_summary"])
     
     edu = d["education"]
-    cv.add_section("Formation" if is_fr else "Education")
+    cv.add_section("Education")
     cv.add_entry(edu["degree"], d.get("edu_years","2023 – 2026"))
     cv.add_sub(edu["university"])
     cv.add_bullet(edu["specialization"])
     cv.add_bullet(edu["project"])
-    cv.add_entry(f"{'Secondaire' if is_fr else 'Secondary'} — {edu['secondary_spec']}", d.get("sec_year","2023"))
+    cv.add_entry(f"Secondary — {edu['secondary_spec']}", d.get("sec_year","2023"))
     cv.add_sub(edu["secondary_school"])
     cv.add_bullet(edu["grade"])
     
     exp = d["experience"]
-    cv.add_section("Expérience" if is_fr else "Experience")
-    cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Présent" if is_fr else "2025 – Present"))
+    cv.add_section("Experience")
+    cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Present"))
     cv.add_sub(d["city"])
     for b in exp["volunteer_bullets"]: cv.add_bullet(b)
-    cv.add_entry(exp["placement_org"], d.get("stage_date","Juin 2024" if is_fr else "June 2024"))
+    cv.add_entry(exp["placement_org"], d.get("stage_date","June 2024"))
     cv.add_sub(d["city"])
     for b in exp["placement_bullets"]: cv.add_bullet(b)
     
-    cv.add_section("Compétences" if is_fr else "Skills")
+    cv.add_section("Skills")
     cv.add_skills(d["cv_skills"]["left"], d["cv_skills"]["right"])
     
-    cv.add_section("Langues" if is_fr else "Languages")
+    cv.add_section("Languages")
     for l in d["languages"]: cv.add_bullet(l)
     
-    cv.add_section("Centres d'intérêt" if is_fr else "Interests")
+    cv.add_section("Interests")
     cv.add_text(d["interests"])
     
     cv.save(output_path)
