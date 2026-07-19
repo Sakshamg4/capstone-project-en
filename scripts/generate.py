@@ -300,7 +300,17 @@ def gen_pptx(name, d, lang):
     layout_code = "".join(layout_sequence)
     ppt_design_safe = f"H{header_style}_B_{bullet_name}_S{skills_split}_{layout_code}"
     
-    out = OUT / f"Presentation_{name.replace(' ','_')}_{ppt_design_safe}.pptx"
+    ppt_patterns = [
+        "NAME_Capstone_Presentation_DESIGN.pptx",
+        "NAME_GreenPathways_Portfolio_DESIGN.pptx",
+        "Capstone_Project_Presentation_NAME_DESIGN.pptx",
+        "NAME_Renewable_Energy_Slides_DESIGN.pptx",
+        "NAME_Project_Pitch_DESIGN.pptx",
+        "Green_Pathways_Capstone_NAME_DESIGN.pptx"
+    ]
+    safe_name = name.replace(' ', '_')
+    fn = random.choice(ppt_patterns).replace("NAME", safe_name).replace("DESIGN", ppt_design_safe)
+    out = OUT / fn
     prs.save(str(out)); return out, ppt_design_safe
 
 # ═══ 2. CAPSTONE DOCUMENT ═══
@@ -340,7 +350,17 @@ def gen_docx(name, d, lang):
     doc.core_properties.title = f'Green Pathways Capstone - {name}'
     doc.core_properties.comments = ''
     
-    out = OUT / f"Capstone_Document_{name.replace(' ','_')}.docx"
+    doc_patterns = [
+        "NAME_Capstone_Document.docx",
+        "NAME_Capstone_Summary_Report.docx",
+        "Capstone_Summary_NAME.docx",
+        "NAME_GreenPathways_Report.docx",
+        "Project_Summary_Report_NAME.docx",
+        "NAME_Portfolio_Document.docx"
+    ]
+    safe_name = name.replace(' ', '_')
+    fn = random.choice(doc_patterns).replace("NAME", safe_name)
+    out = OUT / fn
     doc.save(str(out)); return out
 
 # ═══ MAIN ═══
@@ -377,7 +397,18 @@ def main():
     print("📝 [3/3] CV...")
     temp_path = OUT / f"CV_{name.replace(' ','_')}_temp.docx"
     design = build_cv(data, temp_path)
-    cv_path = OUT / f"CV_{name.replace(' ','_')}_{design.replace(' ', '_')}.docx"
+    cv_patterns = [
+        "NAME_Resume_DESIGN.docx",
+        "NAME_CV_DESIGN.docx",
+        "Curriculum_Vitae_NAME_DESIGN.docx",
+        "NAME_Green_Energy_CV_DESIGN.docx",
+        "Resume_NAME_DESIGN.docx",
+        "CV_NAME_Renewable_Energy_DESIGN.docx"
+    ]
+    safe_name = name.replace(' ', '_')
+    safe_design = design.replace(' ', '_')
+    fn = random.choice(cv_patterns).replace("NAME", safe_name).replace("DESIGN", safe_design)
+    cv_path = OUT / fn
     if temp_path.exists():
         temp_path.rename(cv_path)
     print(f"   🎨 Layout: {design}")
