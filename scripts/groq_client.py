@@ -278,31 +278,60 @@ def generate_content(name, email, country, lang="en"):
     stage_month = random.choice(["June","May","April","March"])
     stage_year = random.choice([2023, 2024, 2025])
     
+    # Clean join helper to prevent double "and"
+    def clean_join(items):
+        if not items:
+            return ""
+        cleaned = [it.strip().lower() for it in items]
+        if len(cleaned) == 1:
+            return cleaned[0]
+        if len(cleaned) == 2:
+            it1, it2 = cleaned[0], cleaned[1]
+            if "and" in it1:
+                return f"{it1}, as well as {it2}"
+            return f"{it1} and {it2}"
+        else:
+            first_part = ", ".join(cleaned[:-1])
+            last_item = cleaned[-1]
+            if "and" in last_item:
+                return f"{first_part}, along with {last_item}"
+            return f"{first_part}, and {last_item}"
+
     # 10 structurally different summary styles
     s1 = c1['skills_en']; s2 = c2['skills_en']
     uni = loc['uni']
     summaries = [
         # Style 1: Goal-first
-        lambda: f"My goal is simple: to contribute meaningfully to the renewable energy transition. After completing my studies at {uni}, I began researching opportunities where I could put my knowledge into practice. Two positions stood out. {c1['name']} is hiring a {c1['poste_en']} in {city}. {c1['desc_en']} What excites me most is the chance to work on {s1[0].lower()}. I also found an opportunity at {c2['name']} for a {c2['poste_en']} in the same region. {c2['desc_en']} Both roles would push me to grow in areas like {s2[1].lower()} and {s1[2].lower()}. I am ready for this step.",
+        lambda: f"My goal is simple: to contribute meaningfully to the renewable energy transition. After completing my studies at {uni}, I began researching opportunities where I could put my knowledge into practice. Two positions stood out. {c1['name']} is hiring a {c1['poste_en']} in {city}. {c1['desc_en']} What excites me most is the chance to work on {s1[0].lower()}. I also found an opportunity at {c2['name']} for a {c2['poste_en']} in the same region. {c2['desc_en']} Both roles would push me to grow in areas like {clean_join([s2[1], s1[2]])}. I am ready for this step.",
         # Style 2: Problem-focused
-        lambda: f"Climate change demands urgent action, and the renewable energy sector is where solutions are being built every day. That conviction grew stronger during my time at {uni}, where I studied energy systems and sustainability. Now, I want to move from theory to practice. I discovered that {c1['name']} offers a {c1['poste_en']} position in {city}. {c1['desc_en']} Separately, {c2['name']} has an opening for a {c2['poste_en']}. {c2['desc_en']} Either role would give me real experience in {s1[0].lower()} and {s2[0].lower()}, skills that are critical for this sector. I am committed to being part of the solution.",
+        lambda: f"Climate change demands urgent action, and the renewable energy sector is where solutions are being built every day. That conviction grew stronger during my time at {uni}, where I studied energy systems and sustainability. Now, I want to move from theory to practice. I discovered that {c1['name']} offers a {c1['poste_en']} position in {city}. {c1['desc_en']} Separately, {c2['name']} has an opening for a {c2['poste_en']}. {c2['desc_en']} Either role would give me real experience in {clean_join([s1[0], s2[0]])}, skills that are critical for this sector. I am committed to being part of the solution.",
         # Style 3: Story-driven
-        lambda: f"It started with a question: how can one person make a difference in the fight against climate change? That question led me to {uni}, where I explored renewable energy, environmental science, and sustainable development. It led me to the Green Pathways program, which sharpened my professional skills. And now it leads me to two specific opportunities. The first is at {c1['name']}, a {c1['poste_en']} role based in {city}. {c1['desc_en']} The second is at {c2['name']}, offering a {c2['poste_en']} position. {c2['desc_en']} I have the skills — {s1[0].lower()}, {s2[1].lower()}, analytical thinking — and the motivation. What I need now is the opportunity to prove it.",
+        lambda: f"It started with a question: how can one person make a difference in the fight against climate change? That question led me to {uni}, where I explored renewable energy, environmental science, and sustainable development. It led me to the Green Pathways program, which sharpened my professional skills. And now it leads me to two specific opportunities. The first is at {c1['name']}, a {c1['poste_en']} role based in {city}. {c1['desc_en']} The second is at {c2['name']}, offering a {c2['poste_en']} position. {c2['desc_en']} I have the skills — {clean_join([s1[0], s2[1]])}, as well as analytical thinking — and the motivation. What I need now is the opportunity to prove it.",
         # Style 4: Skills-focused
-        lambda: f"Throughout my education at {uni}, I developed a diverse skill set that I believe makes me a strong candidate for internships in renewable energy. My abilities include {s1[0].lower()}, {s1[1].lower()}, and {s2[0].lower()}. I am now looking to apply these competencies in a professional setting. Two opportunities align well with my profile. {c1['name']} is seeking a {c1['poste_en']} in {city}, focusing on {c1['desc_en'].split('.')[0].lower()}. Meanwhile, {c2['name']} has a {c2['poste_en']} role that involves {c2['desc_en'].split('.')[0].lower()}. Both positions offer the kind of hands-on experience that would accelerate my professional growth and deepen my commitment to the energy transition.",
+        lambda: f"Throughout my education at {uni}, I developed a diverse skill set that I believe makes me a strong candidate for internships in renewable energy. My abilities include {clean_join([s1[0], s1[1], s2[0]])}. I am now looking to apply these competencies in a professional setting. Two opportunities align well with my profile. {c1['name']} is seeking a {c1['poste_en']} in {city}, focusing on {c1['desc_en'].split('.')[0].lower()}. Meanwhile, {c2['name']} has a {c2['poste_en']} role that involves {c2['desc_en'].split('.')[0].lower()}. Both positions offer the kind of hands-on experience that would accelerate my professional growth and deepen my commitment to the energy transition.",
         # Style 5: Conversational
-        lambda: f"If someone asked me where I see myself in five years, my answer would be clear: working in renewable energy, helping communities access clean power. That vision took shape at {uni} and became sharper through the Green Pathways program. Right now, I am looking at two paths forward. One leads to {c1['name']}, where I could work as a {c1['poste_en']} in {city}. {c1['desc_en']} The other leads to {c2['name']} and their {c2['poste_en']} role. {c2['desc_en']} Both would help me build practical experience in {s1[0].lower()} and {s2[1].lower()}. I am excited about either direction.",
+        lambda: f"If someone asked me where I see myself in five years, my answer would be clear: working in renewable energy, helping communities access clean power. That vision took shape at {uni} and became sharper through the Green Pathways program. Right now, I am looking at two paths forward. One leads to {c1['name']}, where I could work as a {c1['poste_en']} in {city}. {c1['desc_en']} The other leads to {c2['name']} and their {c2['poste_en']} role. {c2['desc_en']} Both would help me build practical experience in {clean_join([s1[0], s2[1]])}. I am excited about either direction.",
         # Style 6: Analytical
-        lambda: f"After careful analysis of the renewable energy job market in my region, I identified two internship positions that match both my qualifications and career objectives. Position one: {c1['poste_en']} at {c1['name']}, located in {city}. {c1['desc_en']} Key requirements include {s1[0].lower()} and {s1[1].lower()}, which I developed at {uni}. Position two: {c2['poste_en']} at {c2['name']}, also in {city}. {c2['desc_en']} This role emphasizes {s2[0].lower()} and {s2[1].lower()}. My academic preparation, including coursework in sustainability and environmental analysis, positions me well for either role. I am confident in my ability to deliver value from day one.",
+        lambda: f"After careful analysis of the renewable energy job market in my region, I identified two internship positions that match both my qualifications and career objectives. Position one: {c1['poste_en']} at {c1['name']}, located in {city}. {c1['desc_en']} Key requirements include {clean_join([s1[0], s1[1]])}, which I developed at {uni}. Position two: {c2['poste_en']} at {c2['name']}, also in {city}. {c2['desc_en']} This role emphasizes {clean_join([s2[0], s2[1]])}. My academic preparation, including coursework in sustainability and environmental analysis, positions me well for either role. I am confident in my ability to deliver value from day one.",
         # Style 7: Passion-led
-        lambda: f"Renewable energy is not just a career choice for me — it is a calling. Every course I took at {uni}, every project I completed, reinforced my desire to work in this field. The Green Pathways program gave me the professional tools to turn that passion into action. I have identified two internships that would allow me to do exactly that. At {c1['name']}, the {c1['poste_en']} role in {city} offers a chance to work on real projects. {c1['desc_en']} At {c2['name']}, the {c2['poste_en']} position provides a different but equally valuable perspective. {c2['desc_en']} I bring strong skills in {s1[0].lower()} and {s2[0].lower()}, and an unwavering commitment to sustainability.",
+        lambda: f"Renewable energy is not just a career choice for me — it is a calling. Every course I took at {uni}, every project I completed, reinforced my desire to work in this field. The Green Pathways program gave me the professional tools to turn that passion into action. I have identified two internships that would allow me to do exactly that. At {c1['name']}, the {c1['poste_en']} role in {city} offers a chance to work on real projects. {c1['desc_en']} At {c2['name']}, the {c2['poste_en']} position provides a different but equally valuable perspective. {c2['desc_en']} I bring strong skills in {clean_join([s1[0], s2[0]])}, and an unwavering commitment to sustainability.",
         # Style 8: Future-oriented
         lambda: f"The energy landscape is changing rapidly, and professionals who can bridge technical knowledge with practical application will be in high demand. My studies at {uni} have prepared me for this reality. I understand both the science behind renewable energy and the project management skills needed to implement it. Looking ahead, I see two clear opportunities to begin my career. {c1['name']} is offering a {c1['poste_en']} position in {city}. {c1['desc_en']} Additionally, {c2['name']} has a {c2['poste_en']} role available. {c2['desc_en']} With expertise in {s1[0].lower()} and a growing knowledge of {s2[1].lower()}, I am well-positioned to contribute immediately.",
         # Style 9: Compact and direct
-        lambda: f"I am seeking an internship in renewable energy. My background: {uni}, with skills in {s1[0].lower()}, {s1[1].lower()}, and {s2[0].lower()}. Two opportunities interest me. First: {c1['poste_en']} at {c1['name']} in {city}. {c1['desc_en']} I would bring my {s1[0].lower()} expertise to this role. Second: {c2['poste_en']} at {c2['name']}. {c2['desc_en']} My {s2[0].lower()} skills make me a strong fit. Through the Green Pathways program, I have refined my professional competencies and am ready to start contributing to the energy transition.",
+        lambda: f"I am seeking an internship in renewable energy. My background: {uni}, with skills in {clean_join([s1[0], s1[1], s2[0]])}. Two opportunities interest me. First: {c1['poste_en']} at {c1['name']} in {city}. {c1['desc_en']} I would bring my {s1[0].lower()} expertise to this role. Second: {c2['poste_en']} at {c2['name']}. {c2['desc_en']} My {s2[0].lower()} skills make me a strong fit. Through the Green Pathways program, I have refined my professional competencies and am ready to start contributing to the energy transition.",
         # Style 10: Reflective
-        lambda: f"Looking back at my time at {uni}, I realize that every module, every group project, and every late-night study session was building toward one thing: a career in renewable energy. The Green Pathways program confirmed this direction and helped me articulate my goals more clearly. I have now identified two internship opportunities that feel right. {c1['name']} is looking for a {c1['poste_en']} in {city}. {c1['desc_en']} I find this appealing because of the focus on {s1[0].lower()}. There is also an opening at {c2['name']} as a {c2['poste_en']}. {c2['desc_en']} What draws me to this role is the emphasis on {s2[0].lower()} and {s2[1].lower()}. I feel ready to take this next step.",
+        lambda: f"Looking back at my time at {uni}, I realize that every module, every group project, and every late-night study session was building toward one thing: a career in renewable energy. The Green Pathways program confirmed this direction and helped me articulate my goals more clearly. I have now identified two internship opportunities that feel right. {c1['name']} is looking for a {c1['poste_en']} in {city}. {c1['desc_en']} I find this appealing because of the focus on {s1[0].lower()}. There is also an opening at {c2['name']} as a {c2['poste_en']}. {c2['desc_en']} What draws me to this role is the emphasis on {clean_join([s2[0], s2[1]])}. I feel ready to take this next step.",
     ]
+
+    # For CV improvements, let's filter out duplicates and join cleanly
+    imp_skills = []
+    for s in c1['skills_en'] + c2['skills_en']:
+        s_clean = s.strip().lower()
+        if "data analysis" not in s_clean and s_clean not in imp_skills:
+            imp_skills.append(s_clean)
+    profile_skill = imp_skills[0] if len(imp_skills) > 0 else "renewable energy systems"
+    section_skill = imp_skills[1] if len(imp_skills) > 1 else "technical report writing"
+    cv_improvements = f"1. Added a professional summary highlighting my skills in {profile_skill}. 2. Updated skills section with {section_skill} and data analysis tools. 3. Integrated link to my optimized LinkedIn profile."
 
     return {
         "name": name, "email": email, "country": country, "lang": "en",
@@ -339,18 +368,14 @@ def generate_content(name, email, country, lang="en"):
             ],
         },
         "cv_skills": {
-            "left": random.sample(["Microsoft Office","Data analysis","Project management","Technical writing","Python / Excel","GIS Mapping (QGIS)","Energy modelling","AutoCAD","Statistical analysis (R)","SQL databases","Report writing","Regulatory monitoring","Solar PV system sizing","Power BI / Tableau","Google Earth Pro"], 4),
-            "right": random.sample(["Teamwork","Communication","Scientific research","Environmental awareness","Adaptability","Problem-solving","Analytical thinking","Self-motivation","Time management","Leadership","Negotiation","Critical thinking","Organization","Creativity","Decision-making"], 4),
+            "left": random.sample(["Microsoft Office","Data analysis","Project management","Technical writing","Python / Excel","GIS Mapping (QGIS)","Energy modelling","AutoCAD","Statistical analysis (R)","SQL databases","Report writing","Regulatory monitoring","Solar PV system sizing","Power BI / Tableau","Google Earth Pro"], 8),
+            "right": random.sample(["Teamwork","Communication","Scientific research","Environmental awareness","Adaptability","Problem-solving","Analytical thinking","Self-motivation","Time management","Leadership","Negotiation","Critical thinking","Organization","Creativity","Decision-making"], 8),
         },
-        "languages": random.choice([
-            ["English: Native / Fluent","French: Intermediate (B1)"],
-            ["English: Fluent (C1)","French: Basic (A2)"],
-            ["English: Native","French: Intermediate (B1)","Local language: Native"],
-        ]),
+        "languages": ["English (Native or Bilingual Proficiency)"],
         "interests": random.choice(INTERESTS),
         "profile_summary": random.choice(PROFILES),
-        "capstone_summary": random.choice(summaries)(),
-        "cv_improvements": f"1. Added a professional summary highlighting my skills in {c1['skills_en'][0].lower()}. 2. Updated skills section with {c2['skills_en'][1].lower()} and data analysis. 3. Integrated link to my optimized LinkedIn profile.",
+        "capstone_summary": summaries[random.randint(0, len(summaries)-1)](),
+        "cv_improvements": cv_improvements,
         "next_steps_immediate": random.sample(["Update my CV and professional profile","Write personalized cover letters","Apply to both identified internships","Connect with industry professionals on LinkedIn","Prepare for interviews"], 4),
         "next_steps_medium": random.sample(["Take additional online training","Attend renewable energy career fairs","Build a professional network in the green sector","Develop project management certifications","Obtain an environmental certification","Gain volunteer experience in sustainability"], 4),
     }

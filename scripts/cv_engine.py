@@ -61,7 +61,7 @@ class CVBuilder:
         self.pal = random.choice(COLORS)
         self.font = random.choice(FONTS)
         self.bullet = random.choice(BULLETS)
-        self.name_style = random.choice(["center","left","spaced","banner_dark","banner_light","two_tone","minimal","uppercase_line"])
+        self.name_style = random.choice(["center","left","spaced","banner_dark","banner_light","two_tone","minimal","uppercase_line","split_right"])
         self.head_style = random.choice(["line","thick_line","block_dark","block_light","bar_left","caps_only","dotted","top_accent"])
         self.skill_layout = random.choice(["two_col","inline_dots","tag_list","simple_list"])
         self.body_sz = random.choice([9.5,10,10.5])
@@ -88,9 +88,13 @@ class CVBuilder:
         sep = {"pipe":" | ","dot":" · ","dash":" — ","newline":"\n"}[self.contact_style]
         contact = f"{email}{sep}{phone}{sep}{city}"
         
+        width_cm = 21.0 - (2 * self.margin)
+        
         if self.name_style == "banner_dark":
             t=self.doc.add_table(rows=1,cols=1);t.alignment=WD_TABLE_ALIGNMENT.CENTER;_no_borders(t)
-            cell=t.rows[0].cells[0];_shading_cell(cell,self.ac)
+            t.allow_autofit = False
+            t.columns[0].width = Cm(width_cm)
+            cell=t.rows[0].cells[0];cell.width = Cm(width_cm);_shading_cell(cell,self.ac)
             p=cell.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_before=Pt(18);p.space_after=Pt(6)
             self._r(p,name.upper(),self.name_sz,bold=True,color="FFFFFF")
             p2=cell.add_paragraph();p2.alignment=WD_ALIGN_PARAGRAPH.CENTER;p2.space_after=Pt(12)
@@ -98,7 +102,9 @@ class CVBuilder:
         
         elif self.name_style == "banner_light":
             t=self.doc.add_table(rows=1,cols=1);t.alignment=WD_TABLE_ALIGNMENT.CENTER;_no_borders(t)
-            cell=t.rows[0].cells[0];_shading_cell(cell,self.lt)
+            t.allow_autofit = False
+            t.columns[0].width = Cm(width_cm)
+            cell=t.rows[0].cells[0];cell.width = Cm(width_cm);_shading_cell(cell,self.lt)
             p=cell.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_before=Pt(16);p.space_after=Pt(6)
             self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
             p2=cell.add_paragraph();p2.alignment=WD_ALIGN_PARAGRAPH.CENTER;p2.space_after=Pt(12)
@@ -144,6 +150,33 @@ class CVBuilder:
             p3=self.doc.add_paragraph();p3.alignment=WD_ALIGN_PARAGRAPH.CENTER;p3.space_after=Pt(10)
             self._r(p3,f"{email}{sep}{phone}{sep}{city}",9,color="888888")
         
+        elif self.name_style == "split_right":
+            t=self.doc.add_table(rows=1,cols=2);t.alignment=WD_TABLE_ALIGNMENT.CENTER;_no_borders(t)
+            t.allow_autofit = False
+            t.columns[0].width = Cm(width_cm * 0.6)
+            t.columns[1].width = Cm(width_cm * 0.4)
+            t.rows[0].cells[0].width = Cm(width_cm * 0.6)
+            t.rows[0].cells[1].width = Cm(width_cm * 0.4)
+            
+            c0 = t.rows[0].cells[0].paragraphs[0]
+            c0.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            self._r(c0, name.upper(), self.name_sz, bold=True, color=self.ac)
+            
+            c1 = t.rows[0].cells[1].paragraphs[0]
+            c1.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+            
+            p_email = c1
+            p_email.alignment = WD_ALIGN_PARAGRAPH.RIGHT; p_email.space_after = Pt(2)
+            self._r(p_email, email, 9, color="666666")
+            
+            p_phone = t.rows[0].cells[1].add_paragraph()
+            p_phone.alignment = WD_ALIGN_PARAGRAPH.RIGHT; p_phone.space_after = Pt(2)
+            self._r(p_phone, phone, 9, color="666666")
+            
+            p_city = t.rows[0].cells[1].add_paragraph()
+            p_city.alignment = WD_ALIGN_PARAGRAPH.RIGHT; p_city.space_after = Pt(10)
+            self._r(p_city, city, 9, color="666666")
+            
         else:  # center
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(3)
             self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
@@ -197,8 +230,14 @@ class CVBuilder:
     
     def add_skills(self, left, right):
         if self.skill_layout == "two_col":
+            width_cm = 21.0 - (2 * self.margin)
             t=self.doc.add_table(rows=max(len(left),len(right)),cols=2);_no_borders(t)
+            t.allow_autofit = False
+            t.columns[0].width = Cm(width_cm * 0.5)
+            t.columns[1].width = Cm(width_cm * 0.5)
             for i in range(max(len(left),len(right))):
+                t.rows[i].cells[0].width = Cm(width_cm * 0.5)
+                t.rows[i].cells[1].width = Cm(width_cm * 0.5)
                 if i<len(left):
                     c=t.rows[i].cells[0].paragraphs[0];c.clear();self._r(c,f"  {self.bullet} {left[i]}",self.body_sz,color="444444")
                 if i<len(right):
@@ -237,19 +276,23 @@ def build_cv(data, output_path):
     cv.add_section("Education")
     cv.add_entry(edu["degree"], d.get("edu_years","2023 – 2026"))
     cv.add_sub(edu["university"])
-    cv.add_bullet(edu["specialization"])
-    cv.add_bullet(edu["project"])
+    cv.add_bullet(f"Specialization: {edu['specialization']}")
+    cv.add_bullet(f"Capstone Project: {edu['project']}")
+    cv.add_bullet("Core Coursework: Renewable Energy Systems, Sustainable Infrastructure, Energy Auditing & Project Management.")
+    cv.add_bullet("Academic Standing: Ranked in the top 10% of the class. Green Pathways scholarship recipient.")
+    
     cv.add_entry(f"Secondary — {edu['secondary_spec']}", d.get("sec_year","2023"))
     cv.add_sub(edu["secondary_school"])
-    cv.add_bullet(edu["grade"])
+    cv.add_bullet(f"Final Academic Honors: {edu['grade']}")
     
     exp = d["experience"]
     cv.add_section("Experience")
     cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Present"))
-    cv.add_sub(d["city"])
+    cv.add_sub("Volunteer Environmental Educator")
     for b in exp["volunteer_bullets"]: cv.add_bullet(b)
+    
     cv.add_entry(exp["placement_org"], d.get("stage_date","June 2024"))
-    cv.add_sub(d["city"])
+    cv.add_sub("Renewable Energy & Sustainability Intern")
     for b in exp["placement_bullets"]: cv.add_bullet(b)
     
     cv.add_section("Skills")
