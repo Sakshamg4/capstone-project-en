@@ -183,8 +183,8 @@ def gen_pptx(name, d, lang):
     opps_slide = {"t": t_opp, "l": o1_opp_content, "r": o2_opp_content}
     skills_slide = {"t": t_skills, "l": skills_left, "r": skills_right}
     
-    lbl_exp1 = random.choice([f"My Work for {o1['company']}", f"Key Contributions - {o1['company']}", f"Value Added at {o1['company']}", f"Prepared for {o1['company']}"])
-    lbl_exp2 = random.choice([f"My Work for {o2['company']}", f"Key Contributions - {o2['company']}", f"Value Added at {o2['company']}", f"Prepared for {o2['company']}"])
+    lbl_exp1 = random.choice([f"Preparation for {o1['company']}", f"Skill Alignment for {o1['company']}", f"Target Assets for {o1['company']}", f"Qualifications for {o1['company']}"])
+    lbl_exp2 = random.choice([f"Preparation for {o2['company']}", f"Skill Alignment for {o2['company']}", f"Target Assets for {o2['company']}", f"Qualifications for {o2['company']}"])
     
     exp_slide = {
         "t": t_exp,

@@ -349,67 +349,103 @@ INTERESTS = [
     "Circular economy • Urban gardening • Upcycling • Community organizing"
 ]
 
-DEGREES = [
-    "BSc Environmental Science",
-    "BSc Geography and Sustainable Planning",
-    "BSc Physics & Energy Studies",
-    "BSc Life Sciences & Ecology",
-    "BSc Civil & Environmental Engineering",
-    "BSc Agricultural & Environmental Science",
-    "BEng Energy Systems Engineering",
-    "BSc Natural Sciences"
+TRACKS = [
+    {
+        "name": "Solar & Microgrids Engineering",
+        "degrees": ["BEng Energy Systems Engineering", "BSc Electrical & Energy Engineering"],
+        "specs": ["Renewable Energy Systems & Microgrids"],
+        "projects": [
+            "Grid integration modeling for battery energy storage systems (BESS)",
+            "Performance analysis and shading simulation of rooftop solar installations",
+            "Feasibility study of a community solar PV farm"
+        ],
+        "coursework": "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.",
+        "standings": [
+            "Ranked in the top 5% of the graduating class. Recipient of the Green Pathways Academic Excellence Award.",
+            "Awarded Best Undergraduate Capstone Research Project in Renewable Energy Systems."
+        ]
+    },
+    {
+        "name": "Wind Energy & Resource Analytics",
+        "degrees": ["BSc Physics & Energy Studies", "BSc Natural Sciences"],
+        "specs": ["Climate Science & Resource Analytics"],
+        "projects": [
+            "Wind resource assessment and capacity factor modeling for a local site",
+            "GIS spatial mapping of offshore wind farm development zones"
+        ],
+        "coursework": "Wind Resource Assessment, SCADA Telemetry, Fluid Mechanics & Environmental Impact.",
+        "standings": [
+            "Top academic standing in Power Systems & Environmental Analytics coursework.",
+            "Selected as Student Presenter at the Annual Green Energy & Sustainability Conference."
+        ]
+    },
+    {
+        "name": "Environmental Impact & Ecology",
+        "degrees": ["BSc Environmental Science", "BSc Life Sciences & Ecology", "BSc Agricultural & Environmental Science"],
+        "specs": ["Ecology & Conservation Biology", "Environmental Management & Policy"],
+        "projects": [
+            "Environmental impact assessment of onshore wind turbines on local wildlife",
+            "Ecological baseline analysis of coastal wetland habitats near energy sites"
+        ],
+        "coursework": "Environmental Impact Assessment (EIA), Ecological Restoration, Biodiversity Monitoring & GIS.",
+        "standings": [
+            "First Class Honors candidate. Named to the Dean's List for four consecutive academic semesters.",
+            "Green Pathways Merit Scholar. Recognized for outstanding laboratory and analytical research."
+        ]
+    },
+    {
+        "name": "Carbon Accounting & Policy",
+        "degrees": ["BSc Geography and Sustainable Planning", "BSc Environmental Management"],
+        "specs": ["Energy and Sustainable Development"],
+        "projects": [
+            "Carbon footprint Life Cycle Assessment (LCA) of residential energy use",
+            "Policy analysis of national renewable energy feed-in tariffs"
+        ],
+        "coursework": "Carbon Accounting & Life Cycle Assessment (LCA), Sustainability Reporting & Energy Policy.",
+        "standings": [
+            "Ranked in the top 10% of the class. Department Representative for Sustainability Initiatives.",
+            "Graduated with High Distinction. Recipient of the Regional Climate Innovation Student Grant."
+        ]
+    },
+    {
+        "name": "Green Building & Energy Auditing",
+        "degrees": ["BSc Civil & Environmental Engineering", "BSc Building Infrastructure"],
+        "specs": ["Green Building Performance & Energy Auditing"],
+        "projects": [
+            "Energy efficiency audit and retrofitting roadmap for a municipal building",
+            "Building envelope thermal modeling for zero-carbon architecture"
+        ],
+        "coursework": "Energy Auditing & Building Efficiency, HVAC Optimization, Green Architecture Standards.",
+        "standings": [
+            "Awarded Best Undergraduate Capstone Research Project in Renewable Energy Systems.",
+            "Ranked in the top 5% of the graduating class. Recipient of the Green Pathways Academic Excellence Award."
+        ]
+    }
 ]
 
-SPECS = [
-    "Energy and Sustainable Development",
-    "Environmental Management & Policy",
-    "Renewable Energy Systems & Microgrids",
-    "Climate Science & Resource Analytics",
-    "Ecology & Conservation Biology",
-    "Green Building Performance & Energy Auditing"
+IMMEDIATE_STEPS_POOL = [
+    "Formulate a site-suitability matrix for regional wind/solar prospective zones",
+    "Complete an advanced certification in PVSyst solar PV simulation",
+    "Initiate professional networking with project engineers at target clean energy firms",
+    "Draft an executive technical portfolio summarizing capstone simulation findings",
+    "Conduct a localized carbon baseline assessment for industrial partner facilities",
+    "Participate in technical webinars hosted by national renewable energy associations",
+    "Review local grid-code compliance regulations for battery storage interconnects",
+    "Prepare tailored technical cover letters for target clean energy firms",
+    "Build interactive energy yield visualization dashboards in Power BI",
+    "Conduct field survey audits for commercial energy efficiency clients"
 ]
 
-PROJECTS = [
-    "Feasibility study of a community solar PV farm",
-    "Urban air quality analysis using low-cost sensor networks",
-    "Wind resource assessment and capacity factor modeling for a local site",
-    "Carbon footprint Life Cycle Assessment (LCA) of residential energy use",
-    "Performance analysis and shading simulation of rooftop solar installations",
-    "Environmental impact assessment of onshore wind turbines on local wildlife",
-    "Grid integration modeling for battery energy storage systems (BESS)",
-    "Energy efficiency audit and retrofitting roadmap for a municipal building"
-]
-
-GRADES = [
-    "First Class Honours",
-    "Upper Second Class Honours (2:1)",
-    "Distinction",
-    "High Merit",
-    "Academic Honors List"
-]
-
-COURSEWORK_POOLS = [
-    "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.",
-    "Wind Resource Assessment, SCADA Telemetry, Fluid Mechanics & Environmental Impact.",
-    "Grid Integration of Renewables, Power Systems Analysis, Smart Metering & Battery Storage.",
-    "Environmental Impact Assessment (EIA), Ecological Restoration, Biodiversity Monitoring & GIS.",
-    "Carbon Accounting & Life Cycle Assessment (LCA), Sustainability Reporting & Energy Policy.",
-    "Energy Auditing & Building Efficiency, HVAC Optimization, Green Architecture Standards.",
-    "GIS Spatial Analysis, Remote Sensing for Clean Energy, Climate Data Analytics & Python.",
-    "Hydroelectric Engineering, Marine Renewable Systems, Hydrology & Environmental Law.",
-    "Biomass Energy Conversion, Waste-to-Energy Sizing, Circular Economy & Process Engineering.",
-    "Renewable Energy Economics, Power Markets, Project Finance & Feasibility Studies."
-]
-
-ACADEMIC_STANDINGS = [
-    "Ranked in the top 5% of the graduating class. Recipient of the Green Pathways Academic Excellence Award.",
-    "First Class Honors candidate. Named to the Dean's List for four consecutive academic semesters.",
-    "Awarded Best Undergraduate Capstone Research Project in Renewable Energy Systems.",
-    "Green Pathways Merit Scholar. Recognized for outstanding laboratory and analytical research.",
-    "Ranked in the top 10% of the class. Department Representative for Sustainability Initiatives.",
-    "Graduated with High Distinction. Recipient of the Regional Climate Innovation Student Grant.",
-    "Top academic standing in Power Systems & Environmental Analytics coursework.",
-    "Selected as Student Presenter at the Annual Green Energy & Sustainability Conference."
+MEDIUM_STEPS_POOL = [
+    "Obtain Certified Energy Manager (CEM) or LEED Green Associate credentials",
+    "Lead microgrid design & commissioning for off-grid rural communities",
+    "Present empirical capstone research at national renewable energy symposiums",
+    "Establish an independent consultancy specializing in EIA environmental permitting",
+    "Oversee utility-scale wind farm SCADA telemetry and predictive maintenance",
+    "Pursue postgraduate research in high-voltage grid stability & decarbonization",
+    "Publish whitepapers on regional energy transition policy frameworks",
+    "Lead cross-functional engineering teams in commercial solar installation projects",
+    "Design zero-emission thermal building retrofit solutions for municipal partners"
 ]
 
 PLACEMENT_BULLETS_POOL = [
@@ -511,6 +547,9 @@ def generate_content(name, email, country, lang="en"):
     section_skill = imp_skills[1] if len(imp_skills) > 1 else "technical report writing"
     cv_improvements = f"1. Added a professional summary highlighting my skills in {profile_skill}. 2. Updated skills section with {section_skill} and data analysis tools. 3. Integrated link to my optimized LinkedIn profile."
 
+    # Pick a cohesive academic track
+    track = random.choice(TRACKS)
+
     # Dynamic past experience organization (separate from target capstone opportunities c1 and c2)
     other_companies = [comp for comp in pool["companies"] if comp["name"] not in [c1["name"], c2["name"]]]
     past_org_candidate = random.choice([loc["stage"]] + [comp["name"] for comp in other_companies])
@@ -553,15 +592,15 @@ def generate_content(name, email, country, lang="en"):
             "qualification": c2["formation_en"], "my_experience": c2["exp_en"],
         },
         "education": {
-            "degree": random.choice(DEGREES),
+            "degree": random.choice(track["degrees"]),
             "university": loc["uni"],
-            "specialization": random.choice(SPECS),
-            "project": random.choice(PROJECTS),
+            "specialization": random.choice(track["specs"]),
+            "project": random.choice(track["projects"]),
             "secondary_school": loc["lycee"],
             "secondary_spec": "Sciences",
-            "grade": random.choice(GRADES),
-            "coursework": random.choice(COURSEWORK_POOLS),
-            "academic_standing": random.choice(ACADEMIC_STANDINGS),
+            "grade": random.choice(["First Class Honours", "Upper Second Class Honours (2:1)", "Distinction", "High Merit"]),
+            "coursework": track["coursework"],
+            "academic_standing": random.choice(track["standings"]),
         },
         "experience": {
             "volunteer_org": vol["org"],
@@ -580,6 +619,6 @@ def generate_content(name, email, country, lang="en"):
         "profile_summary": random.choice(PROFILES),
         "capstone_summary": summaries[random.randint(0, len(summaries)-1)](),
         "cv_improvements": cv_improvements,
-        "next_steps_immediate": random.sample(["Update my CV and professional profile","Write personalized cover letters","Apply to both identified internships","Connect with industry professionals on LinkedIn","Prepare for interviews"], 4),
-        "next_steps_medium": random.sample(["Take additional online training","Attend renewable energy career fairs","Build a professional network in the green sector","Develop project management certifications","Obtain an environmental certification","Gain volunteer experience in sustainability"], 4),
+        "next_steps_immediate": random.sample(IMMEDIATE_STEPS_POOL, 4),
+        "next_steps_medium": random.sample(MEDIUM_STEPS_POOL, 4),
     }
