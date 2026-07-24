@@ -158,14 +158,18 @@ POOL = {
             {"city":"Dansoman","address":"10 Main Street, Dansoman","uni":"Methodist University Ghana","lycee":"St. John's Grammar SHS","stage":"Energy Commission of Ghana, Dansoman"}
         ],
         "companies": [
-            {"name":"Bui Power Authority","poste_en":"Intern - Solar Plant Operations","desc_en":"Bui Power Authority operates Ghana\'s first grid-connected solar plant (50 MWp). This internship involves monitoring plant performance.","skills_en":["Solar PV systems","Office tools and analysis","Electrical engineering","Attention to detail"],"formation_en":"Bachelor\'s in Electrical Engineering","exp_en":["Electrical engineering coursework","Solar systems project","Excel for data tracking","Campus sustainability initiatives"]},
-            {"name":"Destra Energy Group","poste_en":"Intern - Renewable Project Development","desc_en":"Destra Energy develops renewable projects across West Africa. This internship supports feasibility studies for new solar installations.","skills_en":["Renewable technologies","Research and analysis","Presentation tools","English communication"],"formation_en":"Bachelor\'s in Environmental Science or Energy","exp_en":["Energy systems coursework","Renewable energy feasibility research","Report and presentation preparation","Interest in sustainable development"]},
-            {"name":"Daystar Power Ghana","poste_en":"Intern - Commercial Solar Installer","desc_en":"Daystar Power provides solar-as-a-service solutions to businesses across West Africa, with over 100 MW installed capacity.","skills_en":["Commercial solar systems","Customer relationship management","Project coordination","Technical documentation"],"formation_en":"Bachelor's in Engineering or Business","exp_en":["Commercial awareness and client relations","Technical documentation experience","Project coordination skills","Interest in solar energy access"]},
-            {"name":"Suka Solar Ghana","poste_en":"Intern - Solar Systems Technician","desc_en":"Suka Solar provides residential and commercial solar solutions in Ghana with European-standard equipment and extensive warranties.","skills_en":["Solar PV installation","Electrical wiring basics","Customer service","Quality assurance"],"formation_en":"Diploma or Bachelor's in Electrical Engineering","exp_en":["Electrical systems training","Hands-on technical experience","Customer interaction skills","Quality-focused mindset"]},
-            {"name":"Tino Solutions","poste_en":"Intern - Solar PV Project Coordinator","desc_en":"Tino Solutions is a leading renewable energy EPC company in Ghana specializing in turnkey solar PV solutions for public, industrial, and residential projects.","skills_en":["Solar PV project management","AutoCAD or design tools","Procurement and logistics","Stakeholder communication"],"formation_en":"Bachelor's in Engineering or Project Management","exp_en":["Project planning experience","Technical drawing skills","Supply chain awareness","Professional communication"]},
-            {"name":"Energy Masters Ghana","poste_en":"Intern - Renewable Energy Consultant","desc_en":"Energy Masters provides comprehensive renewable energy solutions from consultation to maintenance, with a focus on customized sustainable energy systems.","skills_en":["Energy assessment and auditing","Microsoft Office and reporting","Client consultation","Sustainable energy knowledge"],"formation_en":"Bachelor's in Environmental Science or Energy","exp_en":["Energy auditing or assessment coursework","Report writing experience","Client-facing communication","Sustainability knowledge"]},
-            {"name":"Volta River Authority (VRA)","poste_en":"Intern - Renewable Energy Planning","desc_en":"The Volta River Authority is Ghana's primary hydroelectric and thermal power generator, expanding into solar and wind energy across the country.","skills_en":["Power systems and grid integration","Data analysis and monitoring","Regulatory knowledge","Technical report writing"],"formation_en":"Bachelor's in Electrical Engineering or Energy","exp_en":["Power systems coursework","Data analysis experience","Understanding of energy regulation","Technical writing ability"]},
-            {"name":"PEGA Africa","poste_en":"Intern - Off-Grid Solar Distribution","desc_en":"PEGA Africa provides pay-as-you-go solar systems to off-grid communities in Ghana and Côte d\'Ivoire.","skills_en":["Off-grid solar and pay-as-you-go","Community engagement","Data entry and CRM","Rural travel willingness"],"formation_en":"Bachelor\'s in Business or Development Studies","exp_en":["Rural community volunteering","Energy access interest","English and local language communication","Customer data management"]},
+            {"name":"Bui Power Authority","poste_en":"Intern - Hybrid Solar-Hydro Operations","desc_en":"Bui Power Authority operates Ghana\'s first grid-connected solar plant (50 MWp) integrated with hydroelectric dams.","skills_en":["Hydro and solar PV systems","Office tools and analysis","Electrical engineering","Attention to detail"],"formation_en":"Bachelor\'s in Electrical Engineering","exp_en":["Electrical engineering coursework","Hybrid energy project","Excel for data tracking","Campus sustainability initiatives"]},
+            {"name":"Upwind Volta Ghana","poste_en":"Intern - Wind Resource Assessment Analyst","desc_en":"Upwind Volta is developing utility-scale onshore wind farms along the coastal areas of Ghana to diversify the national energy mix.","skills_en":["Wind resource assessment","Anemometer data analysis","GIS mapping","Technical report writing"],"formation_en":"Bachelor's in Physics or Environmental Science","exp_en":["Wind energy coursework","GIS software proficiency","Data analysis in Python","Field survey experience"]},
+            {"name":"GRIDCo (Ghana Grid Company)","poste_en":"Intern - Smart Grid Integration Assistant","desc_en":"GRIDCo operates the national high-voltage electricity transmission grid, integrating large-scale solar and wind projects into the national grid.","skills_en":["Smart grid integration","Power systems analysis","SCADA monitoring","Electrical engineering"],"formation_en":"Bachelor's in Electrical Engineering or Energy","exp_en":["Power systems modeling","Grid stability coursework","SCADA telemetry experience","Analytical problem-solving"]},
+            {"name":"EPA Ghana (Environmental Protection Agency)","poste_en":"Intern - Environmental Impact Assessor","desc_en":"EPA Ghana regulates environmental standards, evaluating ecological impact studies for industrial and renewable infrastructure projects.","skills_en":["Environmental impact assessment (EIA)","Regulatory compliance","Ecological monitoring","Field survey methods"],"formation_en":"Bachelor's in Environmental Science or Ecology","exp_en":["EIA coursework","Ecological monitoring fieldwork","Technical writing","Environmental regulation knowledge"]},
+            {"name":"Energy Commission of Ghana","poste_en":"Intern - Energy Efficiency & Policy Analyst","desc_en":"The Energy Commission develops national energy policies, efficiency standards, and renewable energy licensing frameworks.","skills_en":["Energy policy","Energy auditing","Regulatory monitoring","Stakeholder consultation"],"formation_en":"Bachelor's in Energy Studies or Economics","exp_en":["Energy policy analysis","Report writing","Policy research","Stakeholder communication"]},
+            {"name":"Volta River Authority (VRA)","poste_en":"Intern - Hydroelectric & Wind Planning","desc_en":"The Volta River Authority is Ghana's primary hydroelectric generator, expanding into utility-scale solar and wind energy across the country.","skills_en":["Hydroelectric operations","Wind & solar planning","Grid integration","Technical documentation"],"formation_en":"Bachelor's in Engineering or Energy Systems","exp_en":["Hydrology or energy systems coursework","Data analysis","Technical writing","Understanding of energy transition"]},
+            {"name":"Daystar Power Ghana","poste_en":"Intern - Commercial Solar Installer","desc_en":"Daystar Power provides solar-as-a-service solutions to commercial and industrial clients across West Africa.","skills_en":["Commercial solar systems","Customer relationship management","Project coordination","Technical documentation"],"formation_en":"Bachelor's in Engineering or Business","exp_en":["Commercial awareness and client relations","Technical documentation experience","Project coordination skills","Interest in solar energy access"]},
+            {"name":"Destra Energy Group","poste_en":"Intern - Renewable Feasibility Analyst","desc_en":"Destra Energy develops clean energy projects across West Africa, conducting technical and economic feasibility studies.","skills_en":["Renewable feasibility studies","Resource analytics","Financial modeling basics","English communication"],"formation_en":"Bachelor\'s in Environmental Science or Energy","exp_en":["Energy systems coursework","Feasibility research","Report preparation","Interest in sustainable development"]},
+            {"name":"Suka Solar Ghana","poste_en":"Intern - Solar Systems Engineer","desc_en":"Suka Solar provides residential and commercial solar PV and battery storage solutions in Ghana with European-standard equipment.","skills_en":["Solar PV installation","Electrical wiring basics","Customer service","Quality assurance"],"formation_en":"Diploma or Bachelor's in Electrical Engineering","exp_en":["Electrical systems training","Hands-on technical experience","Customer interaction skills","Quality-focused mindset"]},
+            {"name":"Tino Solutions","poste_en":"Intern - Clean Energy Project Coordinator","desc_en":"Tino Solutions is a leading renewable energy EPC company in Ghana specializing in turnkey solar PV and energy storage solutions.","skills_en":["Project management","AutoCAD or design tools","Procurement and logistics","Stakeholder communication"],"formation_en":"Bachelor's in Engineering or Project Management","exp_en":["Project planning experience","Technical drawing skills","Supply chain awareness","Professional communication"]},
+            {"name":"PEGA Africa","poste_en":"Intern - Off-Grid Distribution Assistant","desc_en":"PEGA Africa provides pay-as-you-go solar systems and clean appliances to off-grid communities in West Africa.","skills_en":["Off-grid solar systems","Community engagement","Data entry and CRM","Rural travel willingness"],"formation_en":"Bachelor\'s in Business or Development Studies","exp_en":["Rural community volunteering","Energy access interest","English and local language communication","Customer data management"]},
+            {"name":"Tropenbos Ghana Bioenergy","poste_en":"Intern - Biomass & Forestry Decarbonization","desc_en":"Tropenbos Ghana works on sustainable forestry management, biomass energy conversion, and land restoration projects.","skills_en":["Biomass energy conversion","Forestry management","Life cycle assessment","Field surveys"],"formation_en":"Bachelor's in Forestry, Agriculture or Environmental Science","exp_en":["Forestry or biomass coursework","Field survey experience","Data analysis","Community outreach"]}
         ],
     },
     "Ireland": {
@@ -292,10 +296,24 @@ VOLUNTEERS = [
         "bullets": [
             "Assisted marine biologists in monitoring coastal habitat health near offshore sites",
             "Compiled fieldwork data logs on local avian migration and water quality metrics",
-            "Engaged local fishing communities on marine spatial planning awareness"
         ]
     }
 ]
+
+def format_role_title(poste):
+    clean = poste.replace("Intern - ", "").replace("Intern — ", "").replace("Intern ", "").strip()
+    prefixes = [
+        f"Junior {clean}",
+        f"Assistant {clean}",
+        f"Project Associate — {clean}",
+        f"Field Specialist — {clean}",
+        f"Graduate Trainee — {clean}",
+        f"Analyst — {clean}",
+        f"Coordinator — {clean}",
+        clean,
+        f"Intern — {clean}"
+    ]
+    return random.choice(prefixes)
 
 PROFILES = [
     "Motivated student specializing in renewable energy systems and environmental sustainability. Strong technical foundation in data analysis, project coordination, and scientific research. Seeking an internship to apply academic knowledge in a real-world clean energy environment.",
@@ -484,7 +502,7 @@ def generate_content(name, email, country, lang="en"):
     cv_improvements = f"1. Added a professional summary highlighting my skills in {profile_skill}. 2. Updated skills section with {section_skill} and data analysis tools. 3. Integrated link to my optimized LinkedIn profile."
 
     # Dynamic placement role and bullets
-    placement_role_title = c1['poste_en']
+    placement_role_title = format_role_title(c1['poste_en'])
     placement_bullets_sample = random.sample(PLACEMENT_BULLETS_POOL, 3)
 
     # Technical and soft skills pools
@@ -512,12 +530,12 @@ def generate_content(name, email, country, lang="en"):
         "vol_dates": f"{vol_start} {vol_year} – Present",
         "stage_date": f"{stage_month} {stage_year}",
         "opportunity1": {
-            "company": c1["name"], "position": c1["poste_en"], "location": city,
+            "company": c1["name"], "position": format_role_title(c1["poste_en"]), "location": city,
             "description": c1["desc_en"], "skills": c1["skills_en"],
             "qualification": c1["formation_en"], "my_experience": c1["exp_en"],
         },
         "opportunity2": {
-            "company": c2["name"], "position": c2["poste_en"], "location": city,
+            "company": c2["name"], "position": format_role_title(c2["poste_en"]), "location": city,
             "description": c2["desc_en"], "skills": c2["skills_en"],
             "qualification": c2["formation_en"], "my_experience": c2["exp_en"],
         },
@@ -536,7 +554,7 @@ def generate_content(name, email, country, lang="en"):
             "volunteer_org": vol["org"],
             "volunteer_role": vol.get("role", "Volunteer Environmental Educator"),
             "volunteer_bullets": vol["bullets"],
-            "placement_org": loc["stage"],
+            "placement_org": random.choice([loc["stage"], c1["name"], c2["name"]]),
             "placement_role": placement_role_title,
             "placement_bullets": placement_bullets_sample,
         },
