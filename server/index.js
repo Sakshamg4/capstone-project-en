@@ -30,7 +30,9 @@ app.get("/api/download", (req, res) => {
   if (!fs.existsSync(od)) return res.status(404).json({ error: "No files" });
   const files = fs.readdirSync(od).filter(f => f.endsWith(".pptx") || f.endsWith(".docx"));
   if (files.length < 3) return res.status(404).json({ error: "Files not ready" });
-  const nm = files[0].split("_").slice(1).join("_").replace(/\.(pptx|docx)/, "");
+  let content = {}; const cp = path.join(od, "content.json");
+  if (fs.existsSync(cp)) content = JSON.parse(fs.readFileSync(cp, "utf-8"));
+  const nm = (content.name || "Student").trim().replace(/\s+/g, "_");
   res.setHeader("Content-Type", "application/zip");
   res.setHeader("Content-Disposition", `attachment; filename=Capstone_${nm}.zip`);
   const ar = archiver("zip", { zlib: { level: 9 } }); ar.on("error", () => res.status(500).end()); ar.pipe(res);

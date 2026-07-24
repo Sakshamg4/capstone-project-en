@@ -301,15 +301,15 @@ def gen_pptx(name, d, lang):
     ppt_design_safe = f"H{header_style}_B_{bullet_name}_S{skills_split}_{layout_code}"
     
     ppt_patterns = [
-        "NAME_Capstone_Presentation_DESIGN.pptx",
-        "NAME_GreenPathways_Portfolio_DESIGN.pptx",
-        "Capstone_Project_Presentation_NAME_DESIGN.pptx",
-        "NAME_Renewable_Energy_Slides_DESIGN.pptx",
-        "NAME_Project_Pitch_DESIGN.pptx",
-        "Green_Pathways_Capstone_NAME_DESIGN.pptx"
+        "NAME_Capstone_Presentation.pptx",
+        "NAME_GreenPathways_Portfolio.pptx",
+        "Capstone_Project_Presentation_NAME.pptx",
+        "NAME_Renewable_Energy_Slides.pptx",
+        "NAME_Project_Pitch.pptx",
+        "Green_Pathways_Capstone_NAME.pptx"
     ]
     safe_name = name.replace(' ', '_')
-    fn = random.choice(ppt_patterns).replace("NAME", safe_name).replace("DESIGN", ppt_design_safe)
+    fn = random.choice(ppt_patterns).replace("NAME", safe_name)
     out = OUT / fn
     prs.save(str(out)); return out, ppt_design_safe
 
@@ -398,16 +398,15 @@ def main():
     temp_path = OUT / f"CV_{name.replace(' ','_')}_temp.docx"
     design = build_cv(data, temp_path)
     cv_patterns = [
-        "NAME_Resume_DESIGN.docx",
-        "NAME_CV_DESIGN.docx",
-        "Curriculum_Vitae_NAME_DESIGN.docx",
-        "NAME_Green_Energy_CV_DESIGN.docx",
-        "Resume_NAME_DESIGN.docx",
-        "CV_NAME_Renewable_Energy_DESIGN.docx"
+        "NAME_Resume.docx",
+        "NAME_CV.docx",
+        "Curriculum_Vitae_NAME.docx",
+        "NAME_Green_Energy_CV.docx",
+        "Resume_NAME.docx",
+        "CV_NAME_Renewable_Energy.docx"
     ]
     safe_name = name.replace(' ', '_')
-    safe_design = design.replace(' ', '_')
-    fn = random.choice(cv_patterns).replace("NAME", safe_name).replace("DESIGN", safe_design)
+    fn = random.choice(cv_patterns).replace("NAME", safe_name)
     cv_path = OUT / fn
     if temp_path.exists():
         temp_path.rename(cv_path)

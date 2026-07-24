@@ -278,8 +278,10 @@ def build_cv(data, output_path):
     cv.add_sub(edu["university"])
     cv.add_bullet(f"Specialization: {edu['specialization']}")
     cv.add_bullet(f"Capstone Project: {edu['project']}")
-    cv.add_bullet("Core Coursework: Renewable Energy Systems, Sustainable Infrastructure, Energy Auditing & Project Management.")
-    cv.add_bullet("Academic Standing: Ranked in the top 10% of the class. Green Pathways scholarship recipient.")
+    coursework = edu.get("coursework", "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.")
+    academic_standing = edu.get("academic_standing", "Ranked in the top 10% of the class. Green Pathways scholarship recipient.")
+    cv.add_bullet(f"Core Coursework: {coursework}")
+    cv.add_bullet(f"Academic Standing: {academic_standing}")
     
     cv.add_entry(f"Secondary — {edu['secondary_spec']}", d.get("sec_year","2023"))
     cv.add_sub(edu["secondary_school"])
@@ -288,11 +290,13 @@ def build_cv(data, output_path):
     exp = d["experience"]
     cv.add_section("Experience")
     cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Present"))
-    cv.add_sub("Volunteer Environmental Educator")
+    vol_role = exp.get("volunteer_role", "Volunteer Environmental Educator")
+    cv.add_sub(vol_role)
     for b in exp["volunteer_bullets"]: cv.add_bullet(b)
     
     cv.add_entry(exp["placement_org"], d.get("stage_date","June 2024"))
-    cv.add_sub("Renewable Energy & Sustainability Intern")
+    placement_role = exp.get("placement_role", "Renewable Energy & Sustainability Intern")
+    cv.add_sub(placement_role)
     for b in exp["placement_bullets"]: cv.add_bullet(b)
     
     cv.add_section("Skills")

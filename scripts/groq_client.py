@@ -223,19 +223,91 @@ POOL = {
 
 
 VOLUNTEERS = [
-    {"org":"Youth Environmental Movement","bullets":["Led tree-planting and clean energy awareness campaigns","Organized renewable energy workshops for secondary school students","Managed social media content promoting climate action"]},
-    {"org":"Friends of the Earth (local chapter)","bullets":["Campaigned for stronger climate legislation at local level","Organized community workshops on energy efficiency","Created educational content on renewable energy potential"]},
-    {"org":"Local Environmental Association","bullets":["Organized awareness workshops on climate change for youth","Wrote articles on local energy solutions for the association blog","Coordinated a team of volunteers at public environmental events"]},
-    {"org":"Green Youth Coalition","bullets":["Led sustainability projects in partnership with local schools","Organized film screenings and debates on energy transition","Managed community clean-up events and recycling drives"]},
-    {"org":"Climate Action Network (local branch)","bullets":["Participated in advocacy campaigns for renewable energy policy","Helped organize a regional climate summit for young professionals","Developed presentation materials on solar and wind energy basics"]},
+    {
+        "org": "Youth Environmental Movement",
+        "role": "Campus Sustainability Ambassador",
+        "bullets": [
+            "Led tree-planting and clean energy awareness campaigns across campus",
+            "Organized renewable energy workshops for secondary school students",
+            "Managed social media content promoting climate action and carbon reduction"
+        ]
+    },
+    {
+        "org": "Friends of the Earth (local chapter)",
+        "role": "Community Energy Organizer",
+        "bullets": [
+            "Campaigned for stronger climate legislation and renewable energy incentives at local level",
+            "Organized community workshops on residential energy efficiency and heat pumps",
+            "Created educational content on wind and solar power potential for municipal forums"
+        ]
+    },
+    {
+        "org": "Local Environmental Association",
+        "role": "Climate Awareness Educator",
+        "bullets": [
+            "Organized awareness workshops on climate change adaptation for youth groups",
+            "Wrote articles on local energy solutions and microgrids for the association blog",
+            "Coordinated a team of 15 volunteers at public environmental outreach events"
+        ]
+    },
+    {
+        "org": "Green Youth Coalition",
+        "role": "Eco-Project Coordinator",
+        "bullets": [
+            "Led sustainability projects in partnership with local secondary schools",
+            "Organized film screenings and public debates on the European energy transition",
+            "Managed community clean-up events and electronic waste recycling drives"
+        ]
+    },
+    {
+        "org": "Climate Action Network (local branch)",
+        "role": "Youth Climate Delegate",
+        "bullets": [
+            "Participated in advocacy campaigns for national renewable energy policy targets",
+            "Helped organize a regional climate summit for young engineering professionals",
+            "Developed technical presentation materials on solar PV and wind energy basics"
+        ]
+    },
+    {
+        "org": "Renewable Energy Student Association",
+        "role": "Technical Workshop Facilitator",
+        "bullets": [
+            "Facilitated hands-on student workshops on solar panel soldering and battery wiring",
+            "Invited industry guest speakers from local wind farm operators for career panels",
+            "Co-authored a student whitepaper on campus decarbonization strategies"
+        ]
+    },
+    {
+        "org": "Zero Waste & Circular Economy Network",
+        "role": "Circular Economy Lead",
+        "bullets": [
+            "Initiated a campus-wide composting and resource reuse audit",
+            "Hosted public webinars on life cycle assessment (LCA) and sustainable design",
+            "Partnered with local businesses to reduce single-use plastic consumption"
+        ]
+    },
+    {
+        "org": "Coastal & Marine Conservation Group",
+        "role": "Ecological Monitoring Assistant",
+        "bullets": [
+            "Assisted marine biologists in monitoring coastal habitat health near offshore sites",
+            "Compiled fieldwork data logs on local avian migration and water quality metrics",
+            "Engaged local fishing communities on marine spatial planning awareness"
+        ]
+    }
 ]
 
 PROFILES = [
-    "Motivated student with a passion for renewable energy and environmental sustainability. Strong foundation in data analysis, project coordination, and scientific research. Seeking an internship to apply academic knowledge in a real-world setting.",
-    "Dedicated and curious learner committed to the global energy transition. Experienced in teamwork, environmental research, and community engagement. Looking for an opportunity to contribute to renewable energy projects.",
-    "Results-oriented student with a keen interest in clean energy solutions. Skills include data analysis, report writing, and environmental monitoring. Eager to gain hands-on experience in the renewable energy industry.",
-    "Environmentally conscious student with strong analytical and communication abilities. Academic background in sustainability and energy systems. Aspiring to launch a career in renewable energy through a meaningful internship.",
-    "Proactive student passionate about combating climate change through innovation. Skilled in research, data interpretation, and project planning. Seeking a role where I can develop professionally while making a positive environmental impact.",
+    "Motivated student specializing in renewable energy systems and environmental sustainability. Strong technical foundation in data analysis, project coordination, and scientific research. Seeking an internship to apply academic knowledge in a real-world clean energy environment.",
+    "Dedicated energy systems learner committed to the global transition toward zero-carbon power. Experienced in multidisciplinary teamwork, GIS spatial analysis, and community engagement. Eager to contribute to utility-scale wind and solar projects.",
+    "Results-oriented student with a deep focus on clean technology and energy efficiency. Proficient in data modeling, technical report writing, and environmental monitoring. Seeking hands-on experience in renewable project development.",
+    "Environmentally conscious student with strong analytical, technical, and communication abilities. Academic preparation in climate science, smart grid integration, and energy policy. Aspiring to launch a career in sustainable infrastructure.",
+    "Proactive engineering student passionate about combating climate change through technological innovation. Skilled in Python data analysis, PVSyst simulation basics, and project planning. Seeking a role to drive tangible decarbonization impact.",
+    "Analytical student with a keen interest in wind energy resource assessment and SCADA data monitoring. Proven track record in academic research, spatial mapping, and environmental impact evaluation.",
+    "Sustainability-focused student with expertise in life cycle assessment (LCA), carbon accounting, and regulatory compliance. Eager to assist clean energy developers in environmental permitting and feasibility studies.",
+    "Driven student with a strong background in electrical energy systems, battery storage solutions, and microgrids. Passionate about applying modeling skills to optimize commercial solar PV installations.",
+    "Forward-thinking student focused on environmental management and ecological restoration. Skilled in field survey methodologies, GIS mapping, and public stakeholder communication.",
+    "Enthusiastic green transition advocate combining technical engineering coursework with practical project coordination experience. Looking to support innovative clean tech initiatives in a fast-paced environment."
 ]
 
 INTERESTS = [
@@ -244,12 +316,90 @@ INTERESTS = [
     "Clean technology • Running • Documentaries • Community service",
     "Green innovation • Rock climbing • Podcasts • Local community",
     "Climate action • Swimming • Creative writing • Environmental advocacy",
+    "Offshore wind systems • Sailing • Chess • Environmental blogging",
+    "Solar PV technology • Biking • Electronics tinkering • Nature conservation",
+    "Circular economy • Urban gardening • Upcycling • Community organizing"
 ]
 
-DEGREES = ["BSc Environmental Science","BSc Geography and Planning","BSc Physics","BSc Life Sciences","BSc Civil Engineering","BSc Agricultural Science","BEng Energy Systems","BSc Natural Sciences"]
-SPECS = ["Energy and Sustainable Development","Environmental Management","Renewable Energy Systems","Climate Science","Ecology and Conservation","Green Building and Energy"]
-PROJECTS = ["Feasibility study of a community solar farm","Urban air quality analysis using sensor networks","Wind resource assessment for a local wind project","Carbon footprint analysis of a residential area","Performance analysis of rooftop solar installations","Impact assessment of wind turbines on local wildlife"]
-GRADES = ["First Class Honours","Upper Second Class Honours","2:1 Honours","Distinction","Merit"]
+DEGREES = [
+    "BSc Environmental Science",
+    "BSc Geography and Sustainable Planning",
+    "BSc Physics & Energy Studies",
+    "BSc Life Sciences & Ecology",
+    "BSc Civil & Environmental Engineering",
+    "BSc Agricultural & Environmental Science",
+    "BEng Energy Systems Engineering",
+    "BSc Natural Sciences"
+]
+
+SPECS = [
+    "Energy and Sustainable Development",
+    "Environmental Management & Policy",
+    "Renewable Energy Systems & Microgrids",
+    "Climate Science & Resource Analytics",
+    "Ecology & Conservation Biology",
+    "Green Building Performance & Energy Auditing"
+]
+
+PROJECTS = [
+    "Feasibility study of a community solar PV farm",
+    "Urban air quality analysis using low-cost sensor networks",
+    "Wind resource assessment and capacity factor modeling for a local site",
+    "Carbon footprint Life Cycle Assessment (LCA) of residential energy use",
+    "Performance analysis and shading simulation of rooftop solar installations",
+    "Environmental impact assessment of onshore wind turbines on local wildlife",
+    "Grid integration modeling for battery energy storage systems (BESS)",
+    "Energy efficiency audit and retrofitting roadmap for a municipal building"
+]
+
+GRADES = [
+    "First Class Honours",
+    "Upper Second Class Honours (2:1)",
+    "Distinction",
+    "High Merit",
+    "Academic Honors List"
+]
+
+COURSEWORK_POOLS = [
+    "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.",
+    "Wind Resource Assessment, SCADA Telemetry, Fluid Mechanics & Environmental Impact.",
+    "Grid Integration of Renewables, Power Systems Analysis, Smart Metering & Battery Storage.",
+    "Environmental Impact Assessment (EIA), Ecological Restoration, Biodiversity Monitoring & GIS.",
+    "Carbon Accounting & Life Cycle Assessment (LCA), Sustainability Reporting & Energy Policy.",
+    "Energy Auditing & Building Efficiency, HVAC Optimization, Green Architecture Standards.",
+    "GIS Spatial Analysis, Remote Sensing for Clean Energy, Climate Data Analytics & Python.",
+    "Hydroelectric Engineering, Marine Renewable Systems, Hydrology & Environmental Law.",
+    "Biomass Energy Conversion, Waste-to-Energy Sizing, Circular Economy & Process Engineering.",
+    "Renewable Energy Economics, Power Markets, Project Finance & Feasibility Studies."
+]
+
+ACADEMIC_STANDINGS = [
+    "Ranked in the top 5% of the graduating class. Recipient of the Green Pathways Academic Excellence Award.",
+    "First Class Honors candidate. Named to the Dean's List for four consecutive academic semesters.",
+    "Awarded Best Undergraduate Capstone Research Project in Renewable Energy Systems.",
+    "Green Pathways Merit Scholar. Recognized for outstanding laboratory and analytical research.",
+    "Ranked in the top 10% of the class. Department Representative for Sustainability Initiatives.",
+    "Graduated with High Distinction. Recipient of the Regional Climate Innovation Student Grant.",
+    "Top academic standing in Power Systems & Environmental Analytics coursework.",
+    "Selected as Student Presenter at the Annual Green Energy & Sustainability Conference."
+]
+
+PLACEMENT_BULLETS_POOL = [
+    "Analyzed solar PV performance and irradiance data using PVSyst and Excel, compiling weekly energy yield reports",
+    "Assisted senior engineers in conducting environmental impact assessments (EIA) for proposed renewable energy sites",
+    "Created detailed GIS spatial mapping layers in QGIS to evaluate prospective onshore wind farm development zones",
+    "Monitored real-time SCADA telemetry logs to track turbine power curves and identify operational maintenance anomalies",
+    "Performed comprehensive energy efficiency audits on commercial facility lighting and HVAC equipment",
+    "Calculated Scope 1, 2, and 3 carbon emission baselines for corporate client sustainability disclosures",
+    "Prepared technical compliance documentation and grid connection checklists for regional utility filings",
+    "Modeled battery storage degradation curves and economic peak-shaving feasibility scenarios",
+    "Supported field ecological survey teams in documenting local biodiversity metrics around project boundaries",
+    "Compiled stakeholder consultation logs and community feedback surveys for local renewable planning approval",
+    "Synthesized meteorological wind anemometer data to evaluate seasonal capacity factors and wake loss effects",
+    "Drafted technical presentation decks and executive briefings for client site inspection visits",
+    "Participated in site feasibility assessments evaluating land topography, grid proximity, and solar access",
+    "Maintained project tracking dashboards in Power BI to monitor task milestones and environmental permit statuses"
+]
 
 
 def generate_content(name, email, country, lang="en"):
@@ -333,6 +483,28 @@ def generate_content(name, email, country, lang="en"):
     section_skill = imp_skills[1] if len(imp_skills) > 1 else "technical report writing"
     cv_improvements = f"1. Added a professional summary highlighting my skills in {profile_skill}. 2. Updated skills section with {section_skill} and data analysis tools. 3. Integrated link to my optimized LinkedIn profile."
 
+    # Dynamic placement role and bullets
+    placement_role_title = c1['poste_en']
+    placement_bullets_sample = random.sample(PLACEMENT_BULLETS_POOL, 3)
+
+    # Technical and soft skills pools
+    tech_skills_pool = [
+        "PVSyst Simulation", "QGIS Mapping", "RETScreen Analysis", "AutoCAD", 
+        "Python / Pandas", "SCADA Telemetry", "EnergyPlus Modeling", "Homer Energy", 
+        "OpenLCA (Carbon Footprint)", "Data Analysis (Excel / Power BI)", "R Statistical Analysis", 
+        "SQL Databases", "Solar PV System Sizing", "Wind Resource Assessment", 
+        "Energy Auditing", "Power Systems Modeling", "MATLAB / Simulink", 
+        "Google Earth Pro", "Technical Report Writing", "Regulatory Compliance", 
+        "MS Project Scheduling", "Microgrid Design", "Environmental Impact Assessment (EIA)"
+    ]
+    soft_skills_pool = [
+        "Multidisciplinary Teamwork", "Technical Communication", "Analytical Problem-Solving", 
+        "Stakeholder Engagement", "Scientific Research Rigor", "Environmental Advocacy", 
+        "Self-Motivation & Autonomy", "Time & Project Management", "Critical Thinking", 
+        "Adaptability in Fieldwork", "Public Presentation Skills", "Cross-Cultural Collaboration", 
+        "Attention to Technical Detail", "Strategic Decision-Making", "Negotiation & Consensus Building"
+    ]
+
     return {
         "name": name, "email": email, "country": country, "lang": "en",
         "phone": phone, "city": city, "address": loc["address"],
@@ -357,19 +529,20 @@ def generate_content(name, email, country, lang="en"):
             "secondary_school": loc["lycee"],
             "secondary_spec": "Sciences",
             "grade": random.choice(GRADES),
+            "coursework": random.choice(COURSEWORK_POOLS),
+            "academic_standing": random.choice(ACADEMIC_STANDINGS),
         },
         "experience": {
             "volunteer_org": vol["org"],
+            "volunteer_role": vol.get("role", "Volunteer Environmental Educator"),
             "volunteer_bullets": vol["bullets"],
             "placement_org": loc["stage"],
-            "placement_bullets": [
-                "Environmental data analysis and reporting",
-                "Supported ecological transition project monitoring",
-            ],
+            "placement_role": placement_role_title,
+            "placement_bullets": placement_bullets_sample,
         },
         "cv_skills": {
-            "left": random.sample(["Microsoft Office","Data analysis","Project management","Technical writing","Python / Excel","GIS Mapping (QGIS)","Energy modelling","AutoCAD","Statistical analysis (R)","SQL databases","Report writing","Regulatory monitoring","Solar PV system sizing","Power BI / Tableau","Google Earth Pro"], 8),
-            "right": random.sample(["Teamwork","Communication","Scientific research","Environmental awareness","Adaptability","Problem-solving","Analytical thinking","Self-motivation","Time management","Leadership","Negotiation","Critical thinking","Organization","Creativity","Decision-making"], 8),
+            "left": random.sample(tech_skills_pool, 8),
+            "right": random.sample(soft_skills_pool, 8),
         },
         "languages": ["English (Native or Bilingual Proficiency)"],
         "interests": random.choice(INTERESTS),
