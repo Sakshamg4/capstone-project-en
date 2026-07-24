@@ -300,18 +300,28 @@ VOLUNTEERS = [
     }
 ]
 
-def format_role_title(poste):
+def format_opportunity_title(poste):
+    clean = poste.replace("Intern - ", "").replace("Intern — ", "").replace("Intern ", "").strip()
+    prefixes = [
+        f"Intern — {clean}",
+        f"Placement Candidate — {clean}",
+        f"Graduate Intern — {clean}",
+        f"Project Intern — {clean}",
+        f"Intern ({clean})"
+    ]
+    return random.choice(prefixes)
+
+def format_past_experience_title(poste):
     clean = poste.replace("Intern - ", "").replace("Intern — ", "").replace("Intern ", "").strip()
     prefixes = [
         f"Junior {clean}",
         f"Assistant {clean}",
-        f"Project Associate — {clean}",
         f"Field Specialist — {clean}",
-        f"Graduate Trainee — {clean}",
-        f"Analyst — {clean}",
-        f"Coordinator — {clean}",
-        clean,
-        f"Intern — {clean}"
+        f"Research Associate — {clean}",
+        f"Project Assistant — {clean}",
+        f"Operations Associate — {clean}",
+        f"Field Analyst — {clean}",
+        clean
     ]
     return random.choice(prefixes)
 
@@ -501,8 +511,11 @@ def generate_content(name, email, country, lang="en"):
     section_skill = imp_skills[1] if len(imp_skills) > 1 else "technical report writing"
     cv_improvements = f"1. Added a professional summary highlighting my skills in {profile_skill}. 2. Updated skills section with {section_skill} and data analysis tools. 3. Integrated link to my optimized LinkedIn profile."
 
-    # Dynamic placement role and bullets
-    placement_role_title = format_role_title(c1['poste_en'])
+    # Dynamic past experience organization (separate from target capstone opportunities c1 and c2)
+    other_companies = [comp for comp in pool["companies"] if comp["name"] not in [c1["name"], c2["name"]]]
+    past_org_candidate = random.choice([loc["stage"]] + [comp["name"] for comp in other_companies])
+    past_comp_ref = random.choice(other_companies) if other_companies else c1
+    past_role_title = format_past_experience_title(past_comp_ref['poste_en'])
     placement_bullets_sample = random.sample(PLACEMENT_BULLETS_POOL, 3)
 
     # Technical and soft skills pools
@@ -530,12 +543,12 @@ def generate_content(name, email, country, lang="en"):
         "vol_dates": f"{vol_start} {vol_year} – Present",
         "stage_date": f"{stage_month} {stage_year}",
         "opportunity1": {
-            "company": c1["name"], "position": format_role_title(c1["poste_en"]), "location": city,
+            "company": c1["name"], "position": format_opportunity_title(c1["poste_en"]), "location": city,
             "description": c1["desc_en"], "skills": c1["skills_en"],
             "qualification": c1["formation_en"], "my_experience": c1["exp_en"],
         },
         "opportunity2": {
-            "company": c2["name"], "position": format_role_title(c2["poste_en"]), "location": city,
+            "company": c2["name"], "position": format_opportunity_title(c2["poste_en"]), "location": city,
             "description": c2["desc_en"], "skills": c2["skills_en"],
             "qualification": c2["formation_en"], "my_experience": c2["exp_en"],
         },
@@ -554,8 +567,8 @@ def generate_content(name, email, country, lang="en"):
             "volunteer_org": vol["org"],
             "volunteer_role": vol.get("role", "Volunteer Environmental Educator"),
             "volunteer_bullets": vol["bullets"],
-            "placement_org": random.choice([loc["stage"], c1["name"], c2["name"]]),
-            "placement_role": placement_role_title,
+            "placement_org": past_org_candidate,
+            "placement_role": past_role_title,
             "placement_bullets": placement_bullets_sample,
         },
         "cv_skills": {
