@@ -696,11 +696,7 @@ Degree Program: {track['name']}, {loc['uni']}
 Project Title: {proj_val}
 
 This submission includes my complete portfolio for the Green Pathways program. I have attached my presentation deck covering target opportunities at {c1['name']} and {c2['name']}, alongside my tailored CV and project archive.
-
-Files Attached:
-1. Presentation (.pptx)
-2. Resume (.docx)
-3. Portfolio (.zip)""",
+""",
 
         # Human Style 5: Concise Professional Student Note
         lambda: f"""{name} - Green Pathways Capstone Project Submission
