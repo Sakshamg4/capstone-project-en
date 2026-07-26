@@ -607,6 +607,130 @@ def generate_content(name, email, country, lang="en"):
         "Attention to Technical Detail", "Strategic Decision-Making", "Negotiation & Consensus Building"
     ]
 
+    asgn_titles = [
+        f"{name} — Capstone Project & Renewable Energy Career Portfolio",
+        f"Portfolio Submission: {name} — {track['name']} Capstone",
+        f"{name} | Green Pathways Capstone Project & Career Strategy",
+        f"Capstone Research & Internship Portfolio — {name}",
+        f"{name}: Renewable Energy Systems Capstone & Professional Resume",
+        f"Final Capstone Deliverables — {name} ({track['name']})",
+        f"{name} — Green Energy Transition Portfolio & Placement Targets",
+        f"Capstone Placement Dossier: {name} ({city}, {country})",
+        f"Green Pathways Final Submission — {name}",
+        f"{name} | Capstone Presentation, Resume & Portfolio Package"
+    ]
+    asgn_title = random.choice(asgn_titles)
+
+    cap_summary_text = summaries[random.randint(0, len(summaries)-1)]()
+    deg_val = random.choice(track["degrees"])
+    proj_val = track["projects"][0]
+
+    desc_templates = [
+        # Template 1: Header Blocks with Section Borders
+        lambda: f"""==================================================
+GREEN PATHWAYS CAPSTONE SUBMISSION DOSSIER
+==================================================
+CANDIDATE: {name}
+EMAIL: {email}
+INSTITUTION: {loc['uni']} ({city}, {country})
+
+[ACADEMIC HIGHLIGHTS]
+• Track: {track['name']}
+• Degree: {deg_val}
+• Capstone Research: {proj_val}
+
+[CAREER TARGETS]
+1. {c1['name']} ({p1_clean} - {city})
+2. {c2['name']} ({p2_clean} - {city})
+
+[EXECUTIVE SUMMARY]
+{cap_summary_text}
+
+[DELIVERABLES ATTACHED]
+✓ Presentation Deck (.pptx)
+✓ Curriculum Vitae (.docx)
+✓ Complete Archive (.zip)""",
+
+        # Template 2: Cover Brief / Formal Letter Format
+        lambda: f"""To: Evaluation Committee
+From: {name} ({email})
+Re: Final Capstone Project & Placement Portfolio Submission
+
+Please find attached my complete Green Pathways Capstone submission package for {name}, graduating from {loc['uni']}.
+
+ACADEMIC FOCUS: {track['name']}
+CAPSTONE TITLE: {proj_val}
+TARGET ROLES:
+- Position 1: {p1_clean} at {c1['name']} ({city})
+- Position 2: {p2_clean} at {c2['name']} ({city})
+
+PORTFOLIO ABSTRACT:
+{cap_summary_text}
+
+ATTACHED ARTIFACTS:
+- Capstone Presentation (.pptx)
+- Professional Curriculum Vitae (.docx)
+- Portfolio Archive (.zip)""",
+
+        # Template 3: Clean Key-Value Bulleted Brief
+        lambda: f"""Capstone Project Submission Brief
+
+• Student Name: {name}
+• Email: {email}
+• Academic Institution: {loc['uni']}
+• Specialization Track: {track['name']}
+• Capstone Project Title: {proj_val}
+
+• Target Placements:
+  1. {c1['name']} — {p1_clean}
+  2. {c2['name']} — {p2_clean}
+
+• Project Abstract:
+  {cap_summary_text}
+
+• Attached Files:
+  - Presentation Deck (.pptx)
+  - Curriculum Vitae (.docx)
+  - Portfolio Archive (.zip)""",
+
+        # Template 4: Executive Summary Paragraph + Bullet Points
+        lambda: f"""Submission of final Green Pathways Capstone Project portfolio for {name} ({loc['uni']}).
+
+EXECUTIVE SUMMARY:
+{cap_summary_text}
+
+PROJECT & CAREER DETAILS:
+- Student: {name} ({email})
+- Specialization: {track['name']}
+- Capstone Title: {proj_val}
+- Target Placements: {c1['name']} ({p1_clean}) & {c2['name']} ({p2_clean})
+
+SUBMITTED FILES:
+1. Capstone Presentation Deck (.pptx)
+2. Professional Resume / CV (.docx)
+3. Portfolio Package (.zip)""",
+
+        # Template 5: Compact Structured Form
+        lambda: f"""[SUBMISSION METADATA]
+Candidate: {name} | {email}
+University: {loc['uni']} ({city}, {country})
+Field: {track['name']} ({deg_val})
+Capstone: {proj_val}
+
+[TARGET OPPORTUNITIES]
+• {c1['name']} — {p1_clean}
+• {c2['name']} — {p2_clean}
+
+[PORTFOLIO OVERVIEW]
+{cap_summary_text}
+
+[ATTACHMENTS]
+• Slide Deck (.pptx)
+• Resume Document (.docx)
+• Full Archive (.zip)"""
+    ]
+    asgn_desc = random.choice(desc_templates)()
+
     return {
         "name": name, "email": email, "country": country, "lang": "en",
         "phone": phone, "city": city, "address": loc["address"],
@@ -624,10 +748,10 @@ def generate_content(name, email, country, lang="en"):
             "qualification": c2["formation_en"], "my_experience": c2["exp_en"],
         },
         "education": {
-            "degree": random.choice(track["degrees"]),
+            "degree": deg_val,
             "university": loc["uni"],
             "specialization": random.choice(track["specs"]),
-            "project": random.choice(track["projects"]),
+            "project": proj_val,
             "secondary_school": loc["lycee"],
             "secondary_spec": "Sciences",
             "grade": random.choice(["First Class Honours", "Upper Second Class Honours (2:1)", "Distinction", "High Merit"]),
@@ -649,23 +773,10 @@ def generate_content(name, email, country, lang="en"):
         "languages": ["English (Native or Bilingual Proficiency)"],
         "interests": random.choice(INTERESTS),
         "profile_summary": random.choice(PROFILES),
-        "capstone_summary": summaries[random.randint(0, len(summaries)-1)](),
+        "capstone_summary": cap_summary_text,
         "cv_improvements": cv_improvements,
         "next_steps_immediate": random.sample(IMMEDIATE_STEPS_POOL, 4),
         "next_steps_medium": random.sample(MEDIUM_STEPS_POOL, 4),
-        "assignment_title": f"{name} — Capstone Project & Renewable Energy Career Portfolio",
-        "assignment_description": f"""Student Name: {name}
-Email Contact: {email}
-Academic Institution: {loc['uni']} ({city}, {country})
-Degree Specialization: {track['name']}
-Capstone Research Project: {track['projects'][0]}
-
-Target Internship Opportunities:
-1. {c1['name']} — {p1_clean} ({city})
-2. {c2['name']} — {p2_clean} ({city})
-
-Attached Submission Artifacts:
-1. Capstone Presentation Deck (.pptx)
-2. Professional Resume / CV (.docx)
-3. Complete Portfolio Archive (.zip)"""
+        "assignment_title": asgn_title,
+        "assignment_description": asgn_desc,
     }
