@@ -62,11 +62,20 @@ def gen_pptx(name, d, lang):
     prs = Presentation(str(template))
     o1, o2 = d["opportunity1"], d["opportunity2"]
     
-    # 1. Randomize slide layout parameters
+    # 1. Randomize per-slide parameters for rich visual diversity across slides
     header_style = random.choice([1, 2, 3, 4])
-    bullet = random.choice(["•", "✔", "✦", "➤", "❖"])
     skills_split = random.choice([1, 2, 3])
-    layout_type = random.choice([1, 2, 3, 4, 5])
+    
+    b_opp = random.choice(["✔", "➤", "📌", "✨"])
+    b_skills = random.choice(["✦", "•", "▪", "🔹"])
+    b_exp = random.choice(["▸", "❖", "➔", "🔸"])
+    b_steps_symbol = random.choice(["➜", "▶", "•", "1."])
+
+    # Per-slide layout diversity
+    opps_layout = random.choice([1, 4])
+    skills_layout = random.choice([1, 2, 5])
+    exp_layout = random.choice([1, 4, 5])
+    steps_layout = random.choice([2, 3])
     
     # Slide 0: Title — replace Name and Date
     for sh in prs.slides[0].shapes:
@@ -154,8 +163,8 @@ def gen_pptx(name, d, lang):
         o1_hdr = [(True, o1['company'], None), (False, f"Role: {o1['position']} ({o1['location']})", None)]
         o2_hdr = [(True, o2['company'], None), (False, f"Role: {o2['position']} ({o2['location']})", None)]
         
-    o1_opp_content = o1_hdr + [(False, dur, None), (False, o1['description'], None)]
-    o2_opp_content = o2_hdr + [(False, dur, None), (False, o2['description'], None)]
+    o1_opp_content = o1_hdr + [(False, dur, None), (False, o1['description'], b_opp)]
+    o2_opp_content = o2_hdr + [(False, dur, None), (False, o2['description'], b_opp)]
 
     # 3. Format Skills & Qualifications based on skills_split style (bold, text, bullet_char)
     q_label = random.choice(["Academic Requirements", "Required Qualifications", "Minimum Prerequisites", "Target Education Level"])
@@ -163,43 +172,50 @@ def gen_pptx(name, d, lang):
     if skills_split == 1:
         lbl_s1 = random.choice([f"Core Skills for {o1['company']}", f"Technical Competencies - {o1['company']}", f"Skills Required by {o1['company']}"])
         lbl_s2 = random.choice([f"Core Skills for {o2['company']}", f"Technical Competencies - {o2['company']}", f"Skills Required by {o2['company']}"])
-        skills_left = [(True, lbl_s1, None)] + [(False, s, bullet) for s in o1['skills']] + [(True, q_label, None), (False, o1['qualification'], None)]
-        skills_right = [(True, lbl_s2, None)] + [(False, s, bullet) for s in o2['skills']] + [(True, q_label, None), (False, o2['qualification'], None)]
+        skills_left = [(True, lbl_s1, None)] + [(False, s, b_skills) for s in o1['skills']] + [(True, q_label, None), (False, o1['qualification'], b_skills)]
+        skills_right = [(True, lbl_s2, None)] + [(False, s, b_skills) for s in o2['skills']] + [(True, q_label, None), (False, o2['qualification'], b_skills)]
     elif skills_split == 2:
         tech_skills = sorted(list(set(o1['skills'] + o2['skills'])))[:5]
         soft_skills = d.get("cv_skills", {}).get("right", ["Teamwork", "Communication", "Problem-solving"])
         lbl_tech = random.choice(["Technical Skills Checklist", "My Technical Skills", "Solar & Energy Skills", "Target Hard Skills"])
         lbl_soft = random.choice(["Professional Soft Skills", "Core Competencies", "Key Transferable Skills", "Interpersonal Strengths"])
-        skills_left = [(True, lbl_tech, None)] + [(False, s, bullet) for s in tech_skills] + [(True, "Education Requirements", None), (False, o1['qualification'], bullet), (False, o2['qualification'], bullet)]
-        skills_right = [(True, lbl_soft, None)] + [(False, s, bullet) for s in soft_skills]
+        skills_left = [(True, lbl_tech, None)] + [(False, s, b_skills) for s in tech_skills] + [(True, "Education Requirements", None), (False, o1['qualification'], b_skills), (False, o2['qualification'], b_skills)]
+        skills_right = [(True, lbl_soft, None)] + [(False, s, b_skills) for s in soft_skills]
     else:
         all_skills = sorted(list(set(o1['skills'] + o2['skills'])))[:6]
         lbl_all = random.choice(["Combined Skills Checklist", "Prerequisites & Core Competencies", "Full Skills Profile"])
         lbl_roles = random.choice(["Role Alignment Details", "Target Internships & Positions", "Internship Opportunities"])
-        skills_left = [(True, lbl_all, None)] + [(False, s, bullet) for s in all_skills]
-        skills_right = [(True, lbl_roles, None), (True, o1['company'], None), (False, o1['position'], bullet), (True, o2['company'], None), (False, o2['position'], bullet)]
+        skills_left = [(True, lbl_all, None)] + [(False, s, b_skills) for s in all_skills]
+        skills_right = [(True, lbl_roles, None), (True, o1['company'], None), (False, o1['position'], b_skills), (True, o2['company'], None), (False, o2['position'], b_skills)]
 
-    # Content slide definitions
-    opps_slide = {"t": t_opp, "l": o1_opp_content, "r": o2_opp_content}
-    skills_slide = {"t": t_skills, "l": skills_left, "r": skills_right}
-    
+    # Content slide definitions with individual layout types
     lbl_exp1 = random.choice([f"Preparation for {o1['company']}", f"Skill Alignment for {o1['company']}", f"Target Assets for {o1['company']}", f"Qualifications for {o1['company']}"])
     lbl_exp2 = random.choice([f"Preparation for {o2['company']}", f"Skill Alignment for {o2['company']}", f"Target Assets for {o2['company']}", f"Qualifications for {o2['company']}"])
     
     exp_slide = {
         "t": t_exp,
-        "l": [(True, lbl_exp1, None)] + [(False, e, bullet) for e in o1['my_experience']],
-        "r": [(True, lbl_exp2, None)] + [(False, e, bullet) for e in o2['my_experience']]
+        "l": [(True, lbl_exp1, None)] + [(False, e, b_exp) for e in o1['my_experience']],
+        "r": [(True, lbl_exp2, None)] + [(False, e, b_exp) for e in o2['my_experience']],
+        "layout": exp_layout
     }
     
     lbl_step1 = random.choice(["Immediate Actions (Summer 2026)", "Short-Term Action Items", "Priority Action Plan", "Immediate Next Steps"])
     lbl_step2 = random.choice(["Medium-Term Development", "Professional Development Goals", "Long-Term Objectives", "Development Strategy"])
     
+    def fmt_steps(steps, b_char):
+        if b_char == "1.":
+            return [(False, f"{idx+1}. {x}", None) for idx, x in enumerate(steps)]
+        return [(False, x, b_char) for x in steps]
+
     steps_slide = {
         "t": t_steps,
-        "l": [(True, lbl_step1, None)] + [(False, x, bullet) for x in d['next_steps_immediate']],
-        "r": [(True, lbl_step2, None)] + [(False, x, bullet) for x in d['next_steps_medium']]
+        "l": [(True, lbl_step1, None)] + fmt_steps(d['next_steps_immediate'], b_steps_symbol),
+        "r": [(True, lbl_step2, None)] + fmt_steps(d['next_steps_medium'], b_steps_symbol),
+        "layout": steps_layout
     }
+
+    opps_slide = {"t": t_opp, "l": o1_opp_content, "r": o2_opp_content, "layout": opps_layout}
+    skills_slide = {"t": t_skills, "l": skills_left, "r": skills_right, "layout": skills_layout}
 
     slide_content = [opps_slide, skills_slide, exp_slide, steps_slide]
     
@@ -244,36 +260,37 @@ def gen_pptx(name, d, lang):
             bs = sorted(swtf[1:], key=lambda x: x[0].left)
             if len(bs) >= 2:
                 s1, s2 = bs[0][0], bs[1][0]
+                cur_layout = c["layout"]
                 
-                # Record the consistent layout sequence
-                layout_sequence.append(f"L{layout_type}")
+                # Record the layout sequence for this specific slide
+                layout_sequence.append(f"L{cur_layout}")
                 
                 # Delete old placeholder shapes to prevent master slide styling overrides
                 sl.shapes._element.remove(s1._element)
                 sl.shapes._element.remove(s2._element)
                 
-                if layout_type == 1:
+                if cur_layout == 1:
                     # Side-by-side Columns
                     tb1 = sl.shapes.add_textbox(left_x, top_y, col_w, height_y)
                     tb2 = sl.shapes.add_textbox(right_x, top_y, col_w, height_y)
                     fill_tf(tb1.text_frame, c["l"])
                     fill_tf(tb2.text_frame, c["r"])
                     
-                elif layout_type == 2:
+                elif cur_layout == 2:
                     # Top-and-Bottom Split (Vertical Stack)
                     tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, 1600000)
                     tb2 = sl.shapes.add_textbox(left_x, 2900000, full_w, 1600000)
                     fill_tf(tb1.text_frame, c["l"])
                     fill_tf(tb2.text_frame, c["r"])
                     
-                elif layout_type == 3:
+                elif cur_layout == 3:
                     # Single Column Full-Width
                     tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, height_y)
                     # Merge content from both columns
                     merged = c["l"] + [(True, "", None)] + c["r"]
                     fill_tf(tb1.text_frame, merged)
                     
-                elif layout_type == 4:
+                elif cur_layout == 4:
                     # Asymmetric (Left Highlight / Right List)
                     tb1 = sl.shapes.add_textbox(left_x, top_y, 2800000, height_y)
                     tb2 = sl.shapes.add_textbox(3400000, top_y, 5432000, height_y)
@@ -296,7 +313,7 @@ def gen_pptx(name, d, lang):
     
     # Safe PPT design ID for filename compatibility (no special chars like arrow, check, diamond in filenames)
     bullet_names = {"•": "dot", "✔": "check", "✦": "star", "➤": "arrow", "❖": "diamond"}
-    bullet_name = bullet_names.get(bullet, "bullet")
+    bullet_name = bullet_names.get(b_opp, "bullet")
     layout_code = "".join(layout_sequence)
     ppt_design_safe = f"H{header_style}_B_{bullet_name}_S{skills_split}_{layout_code}"
     

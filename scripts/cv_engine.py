@@ -52,14 +52,25 @@ COLORS = [
     {"ac":"2F4858","lt":"ECF0F3","nm":"Petrol"},
 ]
 
-FONTS = ["Calibri","Georgia","Garamond","Cambria","Arial","Trebuchet MS","Book Antiqua","Century Gothic","Tahoma","Palatino Linotype"]
+FONT_PAIRS = [
+    {"h": "Calibri", "b": "Calibri"},
+    {"h": "Arial", "b": "Calibri"},
+    {"h": "Georgia", "b": "Garamond"},
+    {"h": "Trebuchet MS", "b": "Tahoma"},
+    {"h": "Century Gothic", "b": "Calibri"},
+    {"h": "Palatino Linotype", "b": "Book Antiqua"},
+    {"h": "Cambria", "b": "Georgia"},
+]
+
 BULLETS = ["•","–","▹","›","◦","·","▪","—","→","✧"]
 
 
 class CVBuilder:
     def __init__(self):
         self.pal = random.choice(COLORS)
-        self.font = random.choice(FONTS)
+        self.font_pair = random.choice(FONT_PAIRS)
+        self.head_font = self.font_pair["h"]
+        self.body_font = self.font_pair["b"]
         self.bullet = random.choice(BULLETS)
         self.name_style = random.choice(["center","left","spaced","banner_dark","banner_light","two_tone","minimal","uppercase_line","split_right"])
         self.head_style = random.choice(["line","thick_line","block_dark","block_light","bar_left","caps_only","dotted","top_accent"])
@@ -78,8 +89,9 @@ class CVBuilder:
         self.ac = self.pal["ac"]
         self.lt = self.pal["lt"]
     
-    def _r(self,p,text,sz=None,bold=False,italic=False,color=None):
-        r=p.add_run(text);r.font.size=Pt(sz or self.body_sz);r.font.name=self.font
+    def _r(self,p,text,sz=None,bold=False,italic=False,color=None,is_head=False):
+        r=p.add_run(text);r.font.size=Pt(sz or self.body_sz)
+        r.font.name = self.head_font if is_head else self.body_font
         r.bold=bold;r.italic=italic
         if color:r.font.color.rgb=_rgb(color) if isinstance(color,str) else color
         return r
@@ -96,7 +108,7 @@ class CVBuilder:
             t.columns[0].width = Cm(width_cm)
             cell=t.rows[0].cells[0];cell.width = Cm(width_cm);_shading_cell(cell,self.ac)
             p=cell.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_before=Pt(18);p.space_after=Pt(6)
-            self._r(p,name.upper(),self.name_sz,bold=True,color="FFFFFF")
+            self._r(p,name.upper(),self.name_sz,bold=True,color="FFFFFF",is_head=True)
             p2=cell.add_paragraph();p2.alignment=WD_ALIGN_PARAGRAPH.CENTER;p2.space_after=Pt(12)
             self._r(p2,f"{email}{sep}{phone}{sep}{city}",9,color="CCCCCC")
         
@@ -106,7 +118,7 @@ class CVBuilder:
             t.columns[0].width = Cm(width_cm)
             cell=t.rows[0].cells[0];cell.width = Cm(width_cm);_shading_cell(cell,self.lt)
             p=cell.paragraphs[0];p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_before=Pt(16);p.space_after=Pt(6)
-            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
+            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac,is_head=True)
             p2=cell.add_paragraph();p2.alignment=WD_ALIGN_PARAGRAPH.CENTER;p2.space_after=Pt(12)
             self._r(p2,f"{email}{sep}{phone}{sep}{city}",9,color="666666")
         
@@ -114,36 +126,36 @@ class CVBuilder:
             parts=name.upper().split()
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(3)
             if len(parts)>=2:
-                self._r(p,parts[0]+" ",self.name_sz,bold=True,color=self.ac)
-                self._r(p," ".join(parts[1:]),self.name_sz,bold=False,color="444444")
+                self._r(p,parts[0]+" ",self.name_sz,bold=True,color=self.ac,is_head=True)
+                self._r(p," ".join(parts[1:]),self.name_sz,bold=False,color="444444",is_head=True)
             else:
-                self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
+                self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac,is_head=True)
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(10)
             self._r(p,f"{email}{sep}{phone}{sep}{city}",9,color="888888")
         
         elif self.name_style == "left":
             p=self.doc.add_paragraph();p.space_after=Pt(1)
-            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
+            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac,is_head=True)
             p=self.doc.add_paragraph();p.space_after=Pt(10)
             _border(p,self.ac,"4")
             self._r(p,f"{email}{sep}{phone}{sep}{city}",9,color="888888")
         
         elif self.name_style == "spaced":
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(3)
-            self._r(p,"    ".join(name.upper().split()),self.name_sz,bold=True,color=self.ac)
+            self._r(p,"    ".join(name.upper().split()),self.name_sz,bold=True,color=self.ac,is_head=True)
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(10)
             _border(p,self.ac,"6")
             self._r(p,f"{email}{sep}{phone}{sep}{city}",9,color="888888")
         
         elif self.name_style == "minimal":
             p=self.doc.add_paragraph();p.space_after=Pt(1)
-            self._r(p,name,self.name_sz,bold=True,color="222222")
+            self._r(p,name,self.name_sz,bold=True,color="222222",is_head=True)
             p=self.doc.add_paragraph();p.space_after=Pt(10)
             self._r(p,f"{email}{sep}{phone}{sep}{city}",9,color="999999")
         
         elif self.name_style == "uppercase_line":
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(3)
-            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
+            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac,is_head=True)
             # Thin accent line
             p2=self.doc.add_paragraph();p2.alignment=WD_ALIGN_PARAGRAPH.CENTER;p2.space_after=Pt(3)
             self._r(p2,"━" * 20,8,color=self.ac)
@@ -160,7 +172,7 @@ class CVBuilder:
             
             c0 = t.rows[0].cells[0].paragraphs[0]
             c0.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            self._r(c0, name.upper(), self.name_sz, bold=True, color=self.ac)
+            self._r(c0, name.upper(), self.name_sz, bold=True, color=self.ac, is_head=True)
             
             c1 = t.rows[0].cells[1].paragraphs[0]
             c1.alignment = WD_ALIGN_PARAGRAPH.RIGHT
@@ -179,7 +191,7 @@ class CVBuilder:
             
         else:  # center
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(3)
-            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac)
+            self._r(p,name.upper(),self.name_sz,bold=True,color=self.ac,is_head=True)
             p=self.doc.add_paragraph();p.alignment=WD_ALIGN_PARAGRAPH.CENTER;p.space_after=Pt(10)
             self._r(p,f"{email}{sep}{phone}{sep}{city}",9,color="888888")
     
@@ -187,26 +199,26 @@ class CVBuilder:
         p=self.doc.add_paragraph();p.space_before=Pt(13);p.space_after=Pt(5)
         
         if self.head_style == "block_dark":
-            r=self._r(p,f"  {title.upper()}  ",self.head_sz,bold=True,color="FFFFFF")
+            r=self._r(p,f"  {title.upper()}  ",self.head_sz,bold=True,color="FFFFFF",is_head=True)
             _shading_run(r,self.ac)
         elif self.head_style == "block_light":
-            r=self._r(p,f"  {title.upper()}  ",self.head_sz,bold=True,color=self.ac)
+            r=self._r(p,f"  {title.upper()}  ",self.head_sz,bold=True,color=self.ac,is_head=True)
             _shading_run(r,self.lt)
         elif self.head_style == "bar_left":
-            self._r(p,f"▎ {title.upper()}",self.head_sz,bold=True,color=self.ac)
+            self._r(p,f"▎ {title.upper()}",self.head_sz,bold=True,color=self.ac,is_head=True)
         elif self.head_style == "caps_only":
-            self._r(p,title.upper(),self.head_sz+1,bold=True,color=self.ac)
+            self._r(p,title.upper(),self.head_sz+1,bold=True,color=self.ac,is_head=True)
         elif self.head_style == "dotted":
-            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac)
+            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac,is_head=True)
             _border(p,self.ac,"4","dotted")
         elif self.head_style == "top_accent":
             _top_border(p,self.ac,"10")
-            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac)
+            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac,is_head=True)
         elif self.head_style == "thick_line":
-            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac)
+            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac,is_head=True)
             _border(p,self.ac,"12")
         else:  # line
-            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac)
+            self._r(p,title.upper(),self.head_sz,bold=True,color=self.ac,is_head=True)
             _border(p,self.ac,"4")
     
     def add_entry(self, left, right):
@@ -269,44 +281,70 @@ def build_cv(data, output_path):
     
     cv.add_name(name, d["email"], d["phone"], d["city"])
     
-    cv.add_section("Profile")
-    cv.add_text(d["profile_summary"])
+    # 4 distinct section orders for structural layout diversity across generations
+    section_order = random.choice([
+        ["Profile", "Education", "Experience", "Skills", "Languages", "Interests"],
+        ["Profile", "Experience", "Education", "Skills", "Languages", "Interests"],
+        ["Profile", "Skills", "Education", "Experience", "Languages", "Interests"],
+        ["Profile", "Education", "Skills", "Experience", "Languages", "Interests"]
+    ])
     
-    edu = d["education"]
-    cv.add_section("Education")
-    cv.add_entry(edu["degree"], d.get("edu_years","2023 – 2026"))
-    cv.add_sub(edu["university"])
-    cv.add_bullet(f"Specialization: {edu['specialization']}")
-    cv.add_bullet(f"Capstone Project: {edu['project']}")
-    coursework = edu.get("coursework", "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.")
-    academic_standing = edu.get("academic_standing", "Ranked in the top 10% of the class. Green Pathways scholarship recipient.")
-    cv.add_bullet(f"Core Coursework: {coursework}")
-    cv.add_bullet(f"Academic Standing: {academic_standing}")
-    
-    cv.add_entry(f"Secondary — {edu['secondary_spec']}", d.get("sec_year","2023"))
-    cv.add_sub(edu["secondary_school"])
-    cv.add_bullet(f"Final Academic Honors: {edu['grade']}")
-    
-    exp = d["experience"]
-    cv.add_section("Experience")
-    cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Present"))
-    vol_role = exp.get("volunteer_role", "Volunteer Environmental Educator")
-    cv.add_sub(vol_role)
-    for b in exp["volunteer_bullets"]: cv.add_bullet(b)
-    
-    cv.add_entry(exp["placement_org"], d.get("stage_date","June 2024"))
-    placement_role = exp.get("placement_role", "Renewable Energy & Sustainability Intern")
-    cv.add_sub(placement_role)
-    for b in exp["placement_bullets"]: cv.add_bullet(b)
-    
-    cv.add_section("Skills")
-    cv.add_skills(d["cv_skills"]["left"], d["cv_skills"]["right"])
-    
-    cv.add_section("Languages")
-    for l in d["languages"]: cv.add_bullet(l)
-    
-    cv.add_section("Interests")
-    cv.add_text(d["interests"])
-    
+    def render_profile():
+        cv.add_section("Profile")
+        cv.add_text(d["profile_summary"])
+
+    def render_education():
+        edu = d["education"]
+        cv.add_section("Education")
+        cv.add_entry(edu["degree"], d.get("edu_years","2023 – 2026"))
+        cv.add_sub(edu["university"])
+        cv.add_bullet(f"Specialization: {edu['specialization']}")
+        cv.add_bullet(f"Capstone Project: {edu['project']}")
+        coursework = edu.get("coursework", "Solar PV System Sizing, Inverter Electronics, Financial Modeling & Project Management.")
+        academic_standing = edu.get("academic_standing", "Ranked in the top 10% of the class. Green Pathways scholarship recipient.")
+        cv.add_bullet(f"Core Coursework: {coursework}")
+        cv.add_bullet(f"Academic Standing: {academic_standing}")
+        
+        cv.add_entry(f"Secondary — {edu['secondary_spec']}", d.get("sec_year","2023"))
+        cv.add_sub(edu["secondary_school"])
+        cv.add_bullet(f"Final Academic Honors: {edu['grade']}")
+
+    def render_experience():
+        exp = d["experience"]
+        cv.add_section("Experience")
+        cv.add_entry(exp["volunteer_org"], d.get("vol_dates","2025 – Present"))
+        vol_role = exp.get("volunteer_role", "Volunteer Environmental Educator")
+        cv.add_sub(vol_role)
+        for b in exp["volunteer_bullets"]: cv.add_bullet(b)
+        
+        cv.add_entry(exp["placement_org"], d.get("stage_date","June 2024"))
+        placement_role = exp.get("placement_role", "Renewable Energy & Sustainability Intern")
+        cv.add_sub(placement_role)
+        for b in exp["placement_bullets"]: cv.add_bullet(b)
+
+    def render_skills():
+        cv.add_section("Skills")
+        cv.add_skills(d["cv_skills"]["left"], d["cv_skills"]["right"])
+
+    def render_languages():
+        cv.add_section("Languages")
+        for l in d["languages"]: cv.add_bullet(l)
+
+    def render_interests():
+        cv.add_section("Interests")
+        cv.add_text(d["interests"])
+
+    section_map = {
+        "Profile": render_profile,
+        "Education": render_education,
+        "Experience": render_experience,
+        "Skills": render_skills,
+        "Languages": render_languages,
+        "Interests": render_interests
+    }
+
+    for sec in section_order:
+        section_map[sec]()
+
     cv.save(output_path)
     return cv.get_id()
