@@ -608,16 +608,16 @@ def generate_content(name, email, country, lang="en"):
     ]
 
     asgn_titles = [
-        f"{name} — Capstone Project & Renewable Energy Career Portfolio",
-        f"Portfolio Submission: {name} — {track['name']} Capstone",
-        f"{name} | Green Pathways Capstone Project & Career Strategy",
-        f"Capstone Research & Internship Portfolio — {name}",
-        f"{name}: Renewable Energy Systems Capstone & Professional Resume",
-        f"Final Capstone Deliverables — {name} ({track['name']})",
-        f"{name} — Green Energy Transition Portfolio & Placement Targets",
-        f"Capstone Placement Dossier: {name} ({city}, {country})",
-        f"Green Pathways Final Submission — {name}",
-        f"{name} | Capstone Presentation, Resume & Portfolio Package"
+        f"{name} - Capstone Submission ({track['name']})",
+        f"Capstone Final Project Submission - {name}",
+        f"{name} | Green Pathways Capstone Project & CV",
+        f"Final Capstone Submission - {name}",
+        f"{name} - Renewable Energy Capstone & Resume Portfolio",
+        f"Capstone Project Submission: {name}",
+        f"{name} - Capstone Presentation and CV Files",
+        f"Green Pathways Final Submission - {name} ({loc['uni']})",
+        f"{name} Capstone Assignment Submission",
+        f"Final Submission: {name}"
     ]
     asgn_title = random.choice(asgn_titles)
 
@@ -626,108 +626,72 @@ def generate_content(name, email, country, lang="en"):
     proj_val = track["projects"][0]
 
     desc_templates = [
-        # Template 1: Header Blocks with Section Borders
-        lambda: f"""==================================================
-GREEN PATHWAYS CAPSTONE SUBMISSION DOSSIER
-==================================================
-CANDIDATE: {name}
-EMAIL: {email}
-INSTITUTION: {loc['uni']} ({city}, {country})
+        # Human Style 1: Direct & Friendly Student Submission Note
+        lambda: f"""Hi,
 
-[ACADEMIC HIGHLIGHTS]
-• Track: {track['name']}
-• Degree: {deg_val}
-• Capstone Research: {proj_val}
+Please find attached my final submission for the Green Pathways Capstone Project. I have included all three required files: my presentation deck, my resume, and the complete portfolio zip folder.
 
-[CAREER TARGETS]
-1. {c1['name']} ({p1_clean} - {city})
-2. {c2['name']} ({p2_clean} - {city})
+My capstone research focuses on {proj_val.lower()}. In my submission, I have also highlighted my target internship roles at {c1['name']} ({p1_clean}) and {c2['name']} ({p2_clean}).
 
-[EXECUTIVE SUMMARY]
-{cap_summary_text}
+Thank you!
+{name}
+{email}
+{loc['uni']}""",
 
-[DELIVERABLES ATTACHED]
-✓ Presentation Deck (.pptx)
-✓ Curriculum Vitae (.docx)
-✓ Complete Archive (.zip)""",
+        # Human Style 2: Structured Student Submission Note
+        lambda: f"""Capstone Project Final Submission
 
-        # Template 2: Cover Brief / Formal Letter Format
-        lambda: f"""To: Evaluation Committee
-From: {name} ({email})
-Re: Final Capstone Project & Placement Portfolio Submission
+Student: {name}
+Degree: {deg_val} ({loc['uni']})
+Capstone Topic: {proj_val}
 
-Please find attached my complete Green Pathways Capstone submission package for {name}, graduating from {loc['uni']}.
+Overview:
+For my Green Pathways capstone, I analyzed renewable energy integration and prepared target career materials for roles at {c1['name']} and {c2['name']}. My background combines technical modeling with environmental analysis.
 
-ACADEMIC FOCUS: {track['name']}
-CAPSTONE TITLE: {proj_val}
-TARGET ROLES:
-- Position 1: {p1_clean} at {c1['name']} ({city})
-- Position 2: {p2_clean} at {c2['name']} ({city})
+Submitted Files:
+- Capstone Presentation Deck (.pptx)
+- Updated Resume / CV (.docx)
+- Complete Portfolio Package (.zip)""",
 
-PORTFOLIO ABSTRACT:
-{cap_summary_text}
+        # Human Style 3: Conversational Student Note
+        lambda: f"""Here is my final Green Pathways capstone assignment submission.
 
-ATTACHED ARTIFACTS:
+Name: {name}
+Email: {email}
+University: {loc['uni']}
+
+Attached in this submission are my presentation slides, professional resume, and zip archive. My work focuses on {track['name'].lower()} and career preparation for internship placements at {c1['name']} and {c2['name']}.
+
+Please let me know if you need any additional information.
+
+Best regards,
+{name}""",
+
+        # Human Style 4: Academic Overview Brief
+        lambda: f"""Final Capstone Submission - {name}
+
+Degree Program: {track['name']}, {loc['uni']}
+Project Title: {proj_val}
+
+This submission includes my complete portfolio for the Green Pathways program. I have attached my presentation deck covering target opportunities at {c1['name']} and {c2['name']}, alongside my tailored CV and project archive.
+
+Files Attached:
+1. Presentation (.pptx)
+2. Resume (.docx)
+3. Portfolio (.zip)""",
+
+        # Human Style 5: Concise Professional Student Note
+        lambda: f"""{name} - Green Pathways Capstone Project Submission
+
+Summary:
+I am submitting my final capstone project portfolio focusing on {track['name'].lower()}. This submission contains my presentation slides evaluating roles at {c1['name']} and {c2['name']}, my updated resume, and the portfolio zip archive.
+
+Attached files:
 - Capstone Presentation (.pptx)
-- Professional Curriculum Vitae (.docx)
-- Portfolio Archive (.zip)""",
+- Resume (.docx)
+- Portfolio Archive (.zip)
 
-        # Template 3: Clean Key-Value Bulleted Brief
-        lambda: f"""Capstone Project Submission Brief
-
-• Student Name: {name}
-• Email: {email}
-• Academic Institution: {loc['uni']}
-• Specialization Track: {track['name']}
-• Capstone Project Title: {proj_val}
-
-• Target Placements:
-  1. {c1['name']} — {p1_clean}
-  2. {c2['name']} — {p2_clean}
-
-• Project Abstract:
-  {cap_summary_text}
-
-• Attached Files:
-  - Presentation Deck (.pptx)
-  - Curriculum Vitae (.docx)
-  - Portfolio Archive (.zip)""",
-
-        # Template 4: Executive Summary Paragraph + Bullet Points
-        lambda: f"""Submission of final Green Pathways Capstone Project portfolio for {name} ({loc['uni']}).
-
-EXECUTIVE SUMMARY:
-{cap_summary_text}
-
-PROJECT & CAREER DETAILS:
-- Student: {name} ({email})
-- Specialization: {track['name']}
-- Capstone Title: {proj_val}
-- Target Placements: {c1['name']} ({p1_clean}) & {c2['name']} ({p2_clean})
-
-SUBMITTED FILES:
-1. Capstone Presentation Deck (.pptx)
-2. Professional Resume / CV (.docx)
-3. Portfolio Package (.zip)""",
-
-        # Template 5: Compact Structured Form
-        lambda: f"""[SUBMISSION METADATA]
-Candidate: {name} | {email}
-University: {loc['uni']} ({city}, {country})
-Field: {track['name']} ({deg_val})
-Capstone: {proj_val}
-
-[TARGET OPPORTUNITIES]
-• {c1['name']} — {p1_clean}
-• {c2['name']} — {p2_clean}
-
-[PORTFOLIO OVERVIEW]
-{cap_summary_text}
-
-[ATTACHMENTS]
-• Slide Deck (.pptx)
-• Resume Document (.docx)
-• Full Archive (.zip)"""
+Contact: {email} | {loc['uni']}"""
     ]
     asgn_desc = random.choice(desc_templates)()
 
