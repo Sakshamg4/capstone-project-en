@@ -653,4 +653,19 @@ def generate_content(name, email, country, lang="en"):
         "cv_improvements": cv_improvements,
         "next_steps_immediate": random.sample(IMMEDIATE_STEPS_POOL, 4),
         "next_steps_medium": random.sample(MEDIUM_STEPS_POOL, 4),
+        "assignment_title": f"{name} — Capstone Project & Renewable Energy Career Portfolio",
+        "assignment_description": f"""Student Name: {name}
+Email Contact: {email}
+Academic Institution: {loc['uni']} ({city}, {country})
+Degree Specialization: {track['name']}
+Capstone Research Project: {track['projects'][0]}
+
+Target Internship Opportunities:
+1. {c1['name']} — {p1_clean} ({city})
+2. {c2['name']} — {p2_clean} ({city})
+
+Attached Submission Artifacts:
+1. Capstone Presentation Deck (.pptx)
+2. Professional Resume / CV (.docx)
+3. Complete Portfolio Archive (.zip)"""
     }

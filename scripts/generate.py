@@ -555,6 +555,8 @@ def main():
         "languages": data.get("languages",[]), "interests": data.get("interests",""),
         "summary": data.get("capstone_summary",""), "cv_improvements": data.get("cv_improvements",""),
         "next_immediate": data.get("next_steps_immediate",[]), "next_medium": data.get("next_steps_medium",[]),
+        "assignment_title": data.get("assignment_title",""),
+        "assignment_description": data.get("assignment_description",""),
         "cv_design": design,
         "ppt_design": ppt_design,
     }
