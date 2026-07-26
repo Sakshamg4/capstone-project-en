@@ -71,11 +71,11 @@ def gen_pptx(name, d, lang):
     b_exp = random.choice(["▸", "❖", "➔", "🔸"])
     b_steps_symbol = random.choice(["➜", "▶", "•", "1."])
 
-    # Per-slide layout diversity
-    opps_layout = random.choice([1, 4])
-    skills_layout = random.choice([1, 2, 5])
-    exp_layout = random.choice([1, 4, 5])
-    steps_layout = random.choice([2, 3])
+    # Per-slide layout diversity (Layout 1: 2-Col, Layout 2: Top-Bottom Stack, Layout 3: Full Width Hero, Layout 4: Left Focus, Layout 5: Right Focus)
+    opps_layout = random.choice([1, 2, 3, 4, 5])
+    skills_layout = random.choice([1, 2, 3, 4, 5])
+    exp_layout = random.choice([1, 2, 3, 4, 5])
+    steps_layout = random.choice([1, 2, 3, 4, 5])
     
     # Slide 0: Title — replace Name and Date
     for sh in prs.slides[0].shapes:
@@ -86,27 +86,107 @@ def gen_pptx(name, d, lang):
                     if t == "Name": r.text = name
                     elif t == "Date": r.text = "July 2026"
     
-    # EN has Executive Summary at slide index 1 — fill it
-    if len(prs.slides) >= 12:
-        for sh in prs.slides[1].shapes:
-            if sh.has_text_frame:
-                tf = sh.text_frame
-                full_text = tf.text
-                if "100 words" in full_text or "Executive" in full_text:
-                    tf.clear()
-                    r = tf.paragraphs[0].add_run()
-                    r.text = d.get("capstone_summary", "")
-                    r.font.size = Pt(12); r.font.name = "Arial"
-                    # Explicitly remove bullets on executive summary paragraph
-                    pPr = tf.paragraphs[0]._p.get_or_add_pPr()
-                    for tag in ["buChar", "buNone", "buAutoNum", "buBlip"]:
-                        el = pPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}" + tag)
-                        if el is not None:
-                            pPr.remove(el)
-                    etree.SubElement(pPr, "{http://schemas.openxmlformats.org/drawingml/2006/main}buNone")
-                    pPr.set("marL", "0")
-                    pPr.set("indent", "0")
-                    break
+    db = RGBColor(0x1B, 0x3C, 0x6D)
+
+    # Slide 1: Executive Summary & Overview (Dynamic title, 16-17pt readable font, multi-style formatting)
+    exec_titles = [
+        "Executive Project Summary",
+        "Capstone Abstract & Vision",
+        "Executive Overview & Strategy",
+        "Green Pathways Portfolio Summary",
+        "Executive Summary & Placement Objectives"
+    ]
+    t_exec = random.choice(exec_titles)
+
+    if len(prs.slides) >= 2:
+        sl1 = prs.slides[1]
+        swtf1 = [(s, s.text_frame) for s in sl1.shapes if s.has_text_frame]
+        swtf1.sort(key=lambda x: (x[0].top, x[0].left))
+        
+        # 1. Update Title of Slide 1
+        if len(swtf1) >= 1:
+            tf_title = swtf1[0][1]
+            tf_title.clear()
+            r_title = tf_title.paragraphs[0].add_run()
+            r_title.text = t_exec
+            r_title.font.size = Pt(20)
+            r_title.font.bold = True
+            r_title.font.name = "Arial"
+            r_title.font.color.rgb = db
+            
+            pPr = tf_title.paragraphs[0]._p.get_or_add_pPr()
+            for tag in ["buChar", "buNone", "buAutoNum", "buBlip"]:
+                el = pPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}" + tag)
+                if el is not None:
+                    pPr.remove(el)
+            etree.SubElement(pPr, "{http://schemas.openxmlformats.org/drawingml/2006/main}buNone")
+
+        # 2. Update Body Text of Slide 1 with large font (Pt(16)-Pt(17)) and multi-style formatting
+        if len(swtf1) >= 2:
+            tf_body = swtf1[1][1]
+            tf_body.clear()
+            tf_body.word_wrap = True
+            
+            summary_text = d.get("capstone_summary", "")
+            sentences = [s.strip() for s in summary_text.split(".") if s.strip()]
+            
+            s1_format_style = random.choice(["lead_quote", "callout_pillars", "full_paragraph"])
+            
+            if s1_format_style == "lead_quote" and len(sentences) >= 2:
+                # Lead Sentence (Bold & Highlighted, Pt(17))
+                p1 = tf_body.paragraphs[0]
+                p1.space_after = Pt(10)
+                r1 = p1.add_run()
+                r1.text = sentences[0] + "."
+                r1.font.size = Pt(17)
+                r1.font.bold = True
+                r1.font.name = "Arial"
+                r1.font.color.rgb = db
+                
+                # Remaining Text (Pt(16))
+                p2 = tf_body.add_paragraph()
+                p2.space_after = Pt(8)
+                r2 = p2.add_run()
+                r2.text = " ".join(sentences[1:]) + "."
+                r2.font.size = Pt(16)
+                r2.font.name = "Arial"
+                
+            elif s1_format_style == "callout_pillars":
+                p1 = tf_body.paragraphs[0]
+                p1.space_after = Pt(10)
+                r1 = p1.add_run()
+                r1.text = summary_text
+                r1.font.size = Pt(16)
+                r1.font.name = "Arial"
+                
+                # Pillar Callout line
+                p2 = tf_body.add_paragraph()
+                p2.space_after = Pt(6)
+                r2 = p2.add_run()
+                r2.text = f"Pillars of Impact: {d['education']['specialization']} • {d['opportunity1']['company']} • {d['opportunity2']['company']}"
+                r2.font.size = Pt(14)
+                r2.font.bold = True
+                r2.font.name = "Arial"
+                r2.font.color.rgb = db
+                
+            else:
+                p1 = tf_body.paragraphs[0]
+                p1.space_after = Pt(10)
+                r1 = p1.add_run()
+                r1.text = summary_text
+                r1.font.size = Pt(17)
+                r1.font.name = "Arial"
+
+            # Remove bullets on body text paragraphs
+            for p in tf_body.paragraphs:
+                pPr = p._p.get_or_add_pPr()
+                for tag in ["buChar", "buNone", "buAutoNum", "buBlip"]:
+                    el = pPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}" + tag)
+                    if el is not None:
+                        pPr.remove(el)
+                etree.SubElement(pPr, "{http://schemas.openxmlformats.org/drawingml/2006/main}buNone")
+                pPr.set("marL", "0")
+                pPr.set("indent", "0")
     
     db = RGBColor(0x1B, 0x3C, 0x6D)
     opp = "Opportunity"
