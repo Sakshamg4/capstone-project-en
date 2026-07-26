@@ -251,35 +251,39 @@ def gen_pptx(name, d, lang):
         t_exp = random.choice(["My Relevant Experience", "Practical Background & Transferable Skills", "Projects & Accomplishments"])
         t_steps = random.choice(["My Action Plan & Next Steps", "Career Roadmap & Immediate Actions", "Future Development & Strategy"])
     
-    # 2. Format Opportunities text as full narrative paragraphs (bullet_char=None for rich text body)
-    if header_style == 1:
-        o1_hdr = [(True, f"{opp} 1 : {o1['company']}", None), (False, f"{pos} : {o1['position']}", None), (False, f"{loc} : {o1['location']}", None)]
-        o2_hdr = [(True, f"{opp} 2 : {o2['company']}", None), (False, f"{pos} : {o2['position']}", None), (False, f"{loc} : {o2['location']}", None)]
-    elif header_style == 2:
-        o1_hdr = [(True, f"{o1['position']} @ {o1['company']}", None), (False, f"{loc}: {o1['location']}", None)]
-        o2_hdr = [(True, f"{o2['position']} @ {o2['company']}", None), (False, f"{loc}: {o2['location']}", None)]
-    elif header_style == 3:
-        o1_hdr = [(True, f"{o1['company']} — {o1['position']}", None), (False, f"📍 {o1['location']}", None)]
-        o2_hdr = [(True, f"{o2['company']} — {o2['position']}", None), (False, f"📍 {o2['location']}", None)]
-    else:
-        o1_hdr = [(True, o1['company'], None), (False, f"Role: {o1['position']} ({o1['location']})", None)]
-        o2_hdr = [(True, o2['company'], None), (False, f"Role: {o2['position']} ({o2['location']})", None)]
-        
-    opp_text_style = random.choice(["full_narrative", "callout_block", "clean_paragraph"])
+    # 2. Format Placement Target as a unified, single full-width narrative block (NO Opportunity 1 / Opportunity 2 headers!)
+    opp_style = random.choice(["spotlight_dossier", "narrative_dossier", "executive_dossier"])
     
-    if opp_text_style == "full_narrative":
-        o1_desc_text = f"{o1['description']} This target placement aligns directly with my specialized coursework in {d['education']['specialization'].lower()}."
-        o2_desc_text = f"{o2['description']} This role provides key practical development in {d['education']['specialization'].lower()}."
-    elif opp_text_style == "callout_block":
-        o1_desc_text = f"{o1['description']}\nCore Technical Focus: {', '.join(o1['skills'][:2])}."
-        o2_desc_text = f"{o2['description']}\nCore Technical Focus: {', '.join(o2['skills'][:2])}."
+    if opp_style == "spotlight_dossier":
+        opp_block = [
+            (True, f"Primary Placement Target: {o1['company']}", None),
+            (False, f"Role: {o1['position']} ({o1['location']}) • {dur}", None),
+            (False, f"{o1['description']} This target placement aligns directly with my specialized coursework in {d['education']['specialization'].lower()}.", None),
+            (True, f"Secondary Placement Pathway: {o2['company']}", None),
+            (False, f"Role: {o2['position']} ({o2['location']}) — {o2['description']}", None)
+        ]
+    elif opp_style == "narrative_dossier":
+        opp_block = [
+            (True, f"Placement Target: {o1['company']} — {o1['position']}", None),
+            (False, f"📍 Location: {o1['location']} | {dur}", None),
+            (False, f"{o1['description']} This role provides key practical development in {d['education']['specialization'].lower()}.", None),
+            (False, f"Core Technical Focus: {', '.join(o1['skills'][:2])}.", None),
+            (True, f"Additional Opportunity: {o2['company']} ({o2['position']})", None),
+            (False, o2['description'], None)
+        ]
     else:
-        o1_desc_text = o1['description']
-        o2_desc_text = o2['description']
+        opp_block = [
+            (True, f"Target Organization Spotlight: {o1['company']}", None),
+            (False, f"Position: {o1['position']} ({o1['location']})", None),
+            (False, f"Duration: 6 months (from September 2026)", None),
+            (False, o1['description'], None),
+            (True, f"Secondary Opportunity: {o2['company']} — {o2['position']}", None),
+            (False, o2['description'], None)
+        ]
 
-    # Set bullet_char=None so description renders as full narrative paragraph body text (not a bulleted item)
-    o1_opp_content = o1_hdr + [(False, dur, None), (False, o1_desc_text, None)]
-    o2_opp_content = o2_hdr + [(False, dur, None), (False, o2_desc_text, None)]
+    # Full-width single column content (NO side-by-side split)
+    o1_opp_content = opp_block
+    o2_opp_content = []
 
     # 3. Format Skills & Qualifications based on skills_split style (bold, text, bullet_char)
     q_label = random.choice(["Academic Requirements", "Required Qualifications", "Minimum Prerequisites", "Target Education Level"])
