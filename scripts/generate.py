@@ -344,20 +344,26 @@ def gen_pptx(name, d, lang):
         "layout": steps_layout
     }
 
-    opps_slide = {"t": t_opp, "l": o1_opp_content, "r": o2_opp_content, "layout": opps_layout}
-    skills_slide = {"t": t_skills, "l": skills_left, "r": skills_right, "layout": skills_layout}
+    # 4 Radically Distinct Visual Layout Archetypes (Eliminating repetitive 2-column table look)
+    # L3 = Single Hero Full-Width Card
+    # L4 = Asymmetric Left Callout + Right Grid
+    # L2 = Top Quote Banner + Bottom Stack
+    # L5 = Sequential Flow / Timeline Stack
+    layout_patterns = [
+        [3, 4, 2, 5],
+        [2, 3, 5, 4],
+        [4, 5, 3, 2],
+        [5, 2, 4, 3]
+    ]
+    chosen_pattern = random.choice(layout_patterns)
+
+    opps_slide = {"t": t_opp, "l": o1_opp_content, "r": o2_opp_content, "layout": chosen_pattern[0]}
+    skills_slide = {"t": t_skills, "l": skills_left, "r": skills_right, "layout": chosen_pattern[1]}
+    exp_slide = {"t": t_exp, "l": exp_left, "r": exp_right, "layout": chosen_pattern[2]}
+    steps_slide = {"t": t_steps, "l": [(True, lbl_step1, None)] + fmt_steps(d['next_steps_immediate'], b_steps_symbol), "r": [(True, lbl_step2, None)] + fmt_steps(d['next_steps_medium'], b_steps_symbol), "layout": chosen_pattern[3]}
 
     slide_content = [opps_slide, skills_slide, exp_slide, steps_slide]
     
-    # 4. Dynamically shuffle slide sequence order across decks (50% chance)
-    if random.choice([True, False]):
-        random.shuffle(slide_content)
-        
-    # 5. Apply Column Order Swapping dynamically per slide (50% chance)
-    for s_dict in slide_content:
-        if random.choice([True, False]):
-            s_dict["l"], s_dict["r"] = s_dict["r"], s_dict["l"]
-            
     ci = [4, 6, 8, 10]
     layout_sequence = []
     
