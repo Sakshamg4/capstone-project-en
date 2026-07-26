@@ -450,6 +450,19 @@ def gen_docx(name, d, lang):
     template = TDIR / "capstone_template_en.docx"
     doc = Document(str(template))
     
+    doc_fonts = ["Sora", "Calibri", "Arial", "Georgia", "Trebuchet MS", "Century Gothic", "Palatino Linotype"]
+    doc_colors = [
+        DRC(0x15, 0x39, 0x88), # Classic Blue
+        DRC(0x1A, 0x47, 0x2A), # Pine Green
+        DRC(0x2C, 0x3E, 0x50), # Slate
+        DRC(0x3C, 0x15, 0x18), # Deep Wine
+        DRC(0x2D, 0x34, 0x36), # Graphite
+        DRC(0x0C, 0x35, 0x47), # Deep Sea
+        DRC(0x1B, 0x43, 0x32)  # Emerald
+    ]
+    fn_name = random.choice(doc_fonts)
+    fn_color = random.choice(doc_colors)
+    
     # Put name on RIGHT side of table
     for table in doc.tables:
         for row in table.rows:
@@ -459,8 +472,8 @@ def gen_docx(name, d, lang):
                 if "Your Name" in left or "Name" in left:
                     cells[1].paragraphs[0].clear()
                     r = cells[1].paragraphs[0].add_run(name)
-                    r.font.name = "Sora"; r.font.size = DPt(14)
-                    r.italic = True; r.font.color.rgb = DRC(0x15, 0x39, 0x88)
+                    r.font.name = fn_name; r.font.size = DPt(14)
+                    r.italic = True; r.font.color.rgb = fn_color
                     break
     
     # Fill Table 1 = summary, Table 3 = CV improvements
@@ -469,12 +482,12 @@ def gen_docx(name, d, lang):
         cell = tables[1].rows[0].cells[0]
         cell.paragraphs[0].clear()
         r = cell.paragraphs[0].add_run(d["capstone_summary"])
-        r.font.name = "Sora"; r.font.size = DPt(10)
+        r.font.name = fn_name; r.font.size = DPt(10.5)
         
         cell = tables[3].rows[0].cells[0]
         cell.paragraphs[0].clear()
         r = cell.paragraphs[0].add_run(d["cv_improvements"])
-        r.font.name = "Sora"; r.font.size = DPt(10)
+        r.font.name = fn_name; r.font.size = DPt(10.5)
     
     # Clean metadata
     doc.core_properties.author = name

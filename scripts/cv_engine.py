@@ -28,7 +28,7 @@ def _no_borders(table):
 def _tab_right(p):
     pPr=p._p.get_or_add_pPr();tabs=SubElement(pPr,qn('w:tabs'));tab=SubElement(tabs,qn('w:tab'));tab.set(qn('w:val'),'right');tab.set(qn('w:pos'),'9360')
 
-# Professional muted palettes
+# 35 Professional muted palettes
 COLORS = [
     {"ac":"2D3436","lt":"F5F6FA","nm":"Graphite"},     # dark grey
     {"ac":"0C3547","lt":"EBF5FB","nm":"Deep Sea"},      # dark blue-green
@@ -50,6 +50,21 @@ COLORS = [
     {"ac":"14213D","lt":"E8EBF2","nm":"Oxford"},
     {"ac":"4A5859","lt":"EFF1F1","nm":"Steel"},
     {"ac":"2F4858","lt":"ECF0F3","nm":"Petrol"},
+    {"ac":"004D40","lt":"E0F2F1","nm":"Deep Teal"},
+    {"ac":"5D4037","lt":"EFEBE9","nm":"Warm Copper"},
+    {"ac":"212121","lt":"F5F5F5","nm":"Charcoal"},
+    {"ac":"1A237E","lt":"E8EAF6","nm":"Navy Slate"},
+    {"ac":"33691E","lt":"F1F8E9","nm":"Sage"},
+    {"ac":"4E342E","lt":"EFEBE9","nm":"Mocha"},
+    {"ac":"006064","lt":"E0F7FA","nm":"Oceanic"},
+    {"ac":"4A148C","lt":"F3E5F5","nm":"Deep Purple"},
+    {"ac":"880E4F","lt":"FCE4EC","nm":"Rosewood"},
+    {"ac":"E65100","lt":"FFF3E0","nm":"Amber Slate"},
+    {"ac":"1B5E20","lt":"E8F5E9","nm":"Deep Moss"},
+    {"ac":"263238","lt":"ECEFF1","nm":"Midnight Slate"},
+    {"ac":"3E2723","lt":"EFEBE9","nm":"Dark Bronze"},
+    {"ac":"0D47A1","lt":"E8EAF6","nm":"Cobalt"},
+    {"ac":"3E2723","lt":"F5F2F0","nm":"Clay Accent"}
 ]
 
 FONT_PAIRS = [
@@ -60,9 +75,14 @@ FONT_PAIRS = [
     {"h": "Century Gothic", "b": "Calibri"},
     {"h": "Palatino Linotype", "b": "Book Antiqua"},
     {"h": "Cambria", "b": "Georgia"},
+    {"h": "Verdana", "b": "Arial"},
+    {"h": "Garamond", "b": "Georgia"},
+    {"h": "Segoe UI", "b": "Calibri"},
+    {"h": "Bookman Old Style", "b": "Garamond"},
+    {"h": "Helvetica", "b": "Calibri"}
 ]
 
-BULLETS = ["•","–","▹","›","◦","·","▪","—","→","✧"]
+BULLETS = ["•","–","▹","›","◦","·","▪","—","→","✧","🔹","❖"]
 
 
 class CVBuilder:
@@ -72,9 +92,9 @@ class CVBuilder:
         self.head_font = self.font_pair["h"]
         self.body_font = self.font_pair["b"]
         self.bullet = random.choice(BULLETS)
-        self.name_style = random.choice(["center","left","spaced","banner_dark","banner_light","two_tone","minimal","uppercase_line","split_right"])
-        self.head_style = random.choice(["line","thick_line","block_dark","block_light","bar_left","caps_only","dotted","top_accent"])
-        self.skill_layout = random.choice(["two_col","inline_dots","tag_list","simple_list"])
+        self.name_style = random.choice(["center","left","spaced","banner_dark","banner_light","two_tone","minimal","uppercase_line","split_right","underlined_name","top_double_line","left_border_stripe","accent_box","split_header_pills"])
+        self.head_style = random.choice(["line","thick_line","block_dark","block_light","bar_left","caps_only","dotted","top_accent","double_underline","full_shaded_strip","right_aligned_accent","boxed_header"])
+        self.skill_layout = random.choice(["two_col","inline_dots","tag_list","simple_list","category_blocks","bold_pill_tags"])
         self.body_sz = random.choice([9.5,10,10.5])
         self.head_sz = random.choice([10.5,11,12])
         self.name_sz = random.choice([18,20,22,24,26])
