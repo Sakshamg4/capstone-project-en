@@ -149,7 +149,7 @@ def gen_pptx(name, d, lang):
     t_exp = random.choice(exp_titles)
     t_steps = random.choice(steps_titles)
     
-    # 2. Format Opportunities text according to header_style (bold, text, bullet_char)
+    # 2. Format Opportunities text as full narrative paragraphs (bullet_char=None for rich text body)
     if header_style == 1:
         o1_hdr = [(True, f"{opp} 1 : {o1['company']}", None), (False, f"{pos} : {o1['position']}", None), (False, f"{loc} : {o1['location']}", None)]
         o2_hdr = [(True, f"{opp} 2 : {o2['company']}", None), (False, f"{pos} : {o2['position']}", None), (False, f"{loc} : {o2['location']}", None)]
@@ -157,14 +157,27 @@ def gen_pptx(name, d, lang):
         o1_hdr = [(True, f"{o1['position']} @ {o1['company']}", None), (False, f"{loc}: {o1['location']}", None)]
         o2_hdr = [(True, f"{o2['position']} @ {o2['company']}", None), (False, f"{loc}: {o2['location']}", None)]
     elif header_style == 3:
-        o1_hdr = [(True, f"✨ {o1['company']} — {o1['position']}", None), (False, f"📍 {o1['location']}", None)]
-        o2_hdr = [(True, f"✨ {o2['company']} — {o2['position']}", None), (False, f"📍 {o2['location']}", None)]
+        o1_hdr = [(True, f"{o1['company']} — {o1['position']}", None), (False, f"📍 {o1['location']}", None)]
+        o2_hdr = [(True, f"{o2['company']} — {o2['position']}", None), (False, f"📍 {o2['location']}", None)]
     else:
         o1_hdr = [(True, o1['company'], None), (False, f"Role: {o1['position']} ({o1['location']})", None)]
         o2_hdr = [(True, o2['company'], None), (False, f"Role: {o2['position']} ({o2['location']})", None)]
         
-    o1_opp_content = o1_hdr + [(False, dur, None), (False, o1['description'], b_opp)]
-    o2_opp_content = o2_hdr + [(False, dur, None), (False, o2['description'], b_opp)]
+    opp_text_style = random.choice(["full_narrative", "callout_block", "clean_paragraph"])
+    
+    if opp_text_style == "full_narrative":
+        o1_desc_text = f"{o1['description']} This target placement aligns directly with my specialized coursework in {d['education']['specialization'].lower()}."
+        o2_desc_text = f"{o2['description']} This role provides key practical development in {d['education']['specialization'].lower()}."
+    elif opp_text_style == "callout_block":
+        o1_desc_text = f"{o1['description']}\nCore Technical Focus: {', '.join(o1['skills'][:2])}."
+        o2_desc_text = f"{o2['description']}\nCore Technical Focus: {', '.join(o2['skills'][:2])}."
+    else:
+        o1_desc_text = o1['description']
+        o2_desc_text = o2['description']
+
+    # Set bullet_char=None so description renders as full narrative paragraph body text (not a bulleted item)
+    o1_opp_content = o1_hdr + [(False, dur, None), (False, o1_desc_text, None)]
+    o2_opp_content = o2_hdr + [(False, dur, None), (False, o2_desc_text, None)]
 
     # 3. Format Skills & Qualifications based on skills_split style (bold, text, bullet_char)
     q_label = random.choice(["Academic Requirements", "Required Qualifications", "Minimum Prerequisites", "Target Education Level"])
