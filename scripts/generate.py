@@ -88,6 +88,14 @@ def gen_pptx(name, d, lang):
     
     db = RGBColor(0x1B, 0x3C, 0x6D)
 
+    # Default grid layout coordinates (EMUs)
+    top_y = 1152475
+    left_x = 311700
+    col_w = 3999900
+    full_w = 8520600
+    right_x = 4832400
+    height_y = 3416400
+
     # Slide 1: Executive Summary & Overview (Dynamic title, 16-17pt readable font, multi-style formatting)
     exec_titles = [
         "Executive Project Summary",
@@ -103,9 +111,24 @@ def gen_pptx(name, d, lang):
         swtf1 = [(s, s.text_frame) for s in sl1.shapes if s.has_text_frame]
         swtf1.sort(key=lambda x: (x[0].top, x[0].left))
         
-        # 1. Update Title of Slide 1
-        if len(swtf1) >= 1:
-            tf_title = swtf1[0][1]
+        if len(swtf1) >= 2:
+            sh_title, tf_title = swtf1[0]
+            sh_body, tf_body = swtf1[1]
+            
+            # Align shape left and top coordinates cleanly to match exact layout grid
+            sh_title.left = left_x
+            sh_title.top = top_y
+            sh_title.width = full_w
+            
+            sh_body.left = left_x
+            sh_body.top = top_y + 1100000
+            sh_body.width = full_w
+            sh_body.height = height_y - 1100000
+
+            tf_title.margin_left = 0; tf_title.margin_right = 0; tf_title.margin_top = 0; tf_title.margin_bottom = 0
+            tf_body.margin_left = 0; tf_body.margin_right = 0; tf_body.margin_top = 0; tf_body.margin_bottom = 0
+            
+            # 1. Update Title of Slide 1
             tf_title.clear()
             r_title = tf_title.paragraphs[0].add_run()
             r_title.text = t_exec
@@ -123,7 +146,6 @@ def gen_pptx(name, d, lang):
 
         # 2. Update Body Text of Slide 1 with large font (Pt(16)-Pt(17)) and multi-style formatting
         if len(swtf1) >= 2:
-            tf_body = swtf1[1][1]
             tf_body.clear()
             tf_body.word_wrap = True
             
