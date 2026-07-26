@@ -217,39 +217,39 @@ def gen_pptx(name, d, lang):
     dur = "Duration: 6 months (from September 2026)"
     
     # Human-style slide titles
-    opp_titles = [
-        "Target Internship Opportunities",
-        "Selected Career Pathways",
-        "My Target Roles in Renewable Energy",
-        "Key Opportunities of Interest",
-        "Renewable Energy Internship Targets"
-    ]
-    skills_titles = [
-        "Skills & Core Qualifications",
-        "My Core Competencies",
-        "Technical Skills & Requirements",
-        "Prerequisites & What I Bring",
-        "Required Skills and Training"
-    ]
-    exp_titles = [
-        "My Relevant Experience",
-        "Practical Background & Transferable Skills",
-        "Projects & Volunteering Accomplishments",
-        "What I Have Achieved So Far",
-        "Transferable Experience & Accomplishments"
-    ]
-    steps_titles = [
-        "My Action Plan & Next Steps",
-        "Career Roadmap & Immediate Actions",
-        "Future Development & Next Steps",
-        "My Next Steps & Career Strategy",
-        "Roadmap to My Professional Goals"
-    ]
+    deck_archetype = random.choice([
+        "opportunity_comparison",
+        "capstone_technical_deepdive",
+        "skills_portfolio_matrix",
+        "sector_market_strategy",
+        "feasibility_roadmap"
+    ])
     
-    t_opp = random.choice(opp_titles)
-    t_skills = random.choice(skills_titles)
-    t_exp = random.choice(exp_titles)
-    t_steps = random.choice(steps_titles)
+    if deck_archetype == "capstone_technical_deepdive":
+        t_opp = random.choice(["Capstone Technical Scope & Target Roles", "Research Focus & Industry Applications", "Technical Problem Statement & Placement Scope"])
+        t_skills = random.choice(["Engineering Tool Stack & Analytical Modeling", "Technical Competencies & Simulation Tools", "Energy Systems Toolchain & Skills"])
+        t_exp = random.choice(["Capstone Outcomes & Applied Qualifications", "Practical Project Preparation & Assets", "Research Methodology & Applied Experience"])
+        t_steps = random.choice(["Technical Implementation Roadmap", "3-Phase Development Strategy", "Next Steps in Capstone Deployment"])
+    elif deck_archetype == "skills_portfolio_matrix":
+        t_opp = random.choice(["Career Specialization & Target Roles", "Target Internship Placement Overview", "Professional Placement Targets"])
+        t_skills = random.choice(["Technical Competencies & Environmental Compliance", "Hard Skills Matrix & Qualifications", "Core Engineering & Applied Skills"])
+        t_exp = random.choice(["Practical Project Accomplishments", "Fieldwork & Leadership Experience", "Demonstrated Technical Preparation"])
+        t_steps = random.choice(["Professional Growth & Skill Mastery Goals", "Career Strategy & Development Milestones", "Personal Action Plan & Future Goals"])
+    elif deck_archetype == "sector_market_strategy":
+        t_opp = random.choice(["Regional Clean Energy Placement Landscape", "Sector Analysis & Target Companies", "Clean Tech Market Opportunities"])
+        t_skills = random.choice(["Target Role Prerequisites & Core Skills", "Industry Qualifications & Skill Matrix", "Required Competencies & Background"])
+        t_exp = random.choice(["Academic Specialization & Applied Competencies", "Relevant Background & Project Portfolio", "Applied Academic Assets"])
+        t_steps = random.choice(["Career Deployment & Strategic Milestones", "Strategic Roadmap & Next Steps", "Action Plan for Sector Integration"])
+    elif deck_archetype == "feasibility_roadmap":
+        t_opp = random.choice(["Strategic Target Organizations & Roles", "Target Placement Scope Overview", "Selected Renewable Energy Opportunities"])
+        t_skills = random.choice(["Feasibility Modeling & Energy Analytics", "Technical Modeling & Energy Yield Skills", "Analytical & Feasibility Competencies"])
+        t_exp = random.choice(["Value Delivered to Target Employers", "Demonstrated Field & Lab Capabilities", "Qualifications & Practical Assets"])
+        t_steps = random.choice(["3-Phase Professional Milestone Strategy", "Strategic Action Roadmap", "Implementation Milestones & Action Plan"])
+    else:
+        t_opp = random.choice(["Target Internship Opportunities", "Selected Career Pathways", "My Target Roles in Renewable Energy"])
+        t_skills = random.choice(["Skills & Core Qualifications", "My Core Competencies", "Technical Skills & Requirements"])
+        t_exp = random.choice(["My Relevant Experience", "Practical Background & Transferable Skills", "Projects & Accomplishments"])
+        t_steps = random.choice(["My Action Plan & Next Steps", "Career Roadmap & Immediate Actions", "Future Development & Strategy"])
     
     # 2. Format Opportunities text as full narrative paragraphs (bullet_char=None for rich text body)
     if header_style == 1:
