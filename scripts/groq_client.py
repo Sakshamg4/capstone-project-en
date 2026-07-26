@@ -474,7 +474,29 @@ def generate_content(name, email, country, lang="en"):
     
     city = loc["city"]
     phone = _rnd_phone(country)
-    comps = random.sample(pool["companies"], 2)
+    
+    # Pick cohesive academic track first
+    track = random.choice(TRACKS)
+    track_name_lower = track["name"].lower()
+
+    # Filter companies to match track domain for deep technical content specialization
+    matched_comps = []
+    for comp in pool["companies"]:
+        p_lower = (comp["poste_en"] + " " + comp["desc_en"]).lower()
+        if ("solar" in track_name_lower or "microgrid" in track_name_lower) and any(k in p_lower for k in ["solar", "pv", "grid", "power", "bess", "clean"]):
+            matched_comps.append(comp)
+        elif ("wind" in track_name_lower or "resource" in track_name_lower) and any(k in p_lower for k in ["wind", "resource", "turbine", "climate", "analytics"]):
+            matched_comps.append(comp)
+        elif ("impact" in track_name_lower or "ecology" in track_name_lower) and any(k in p_lower for k in ["environmental", "impact", "eia", "ecology", "protection", "green"]):
+            matched_comps.append(comp)
+        elif ("building" in track_name_lower or "audit" in track_name_lower) and any(k in p_lower for k in ["audit", "building", "efficiency", "commercial", "performance"]):
+            matched_comps.append(comp)
+
+    if len(matched_comps) >= 2:
+        comps = random.sample(matched_comps, 2)
+    else:
+        comps = random.sample(pool["companies"], 2)
+        
     c1, c2 = comps[0], comps[1]
     vol = random.choice(VOLUNTEERS)
     

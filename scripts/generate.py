@@ -303,14 +303,29 @@ def gen_pptx(name, d, lang):
         skills_left = [(True, lbl_all, None)] + [(False, s, b_skills) for s in all_skills]
         skills_right = [(True, lbl_roles, None), (True, o1['company'], None), (False, o1['position'], b_skills), (True, o2['company'], None), (False, o2['position'], b_skills)]
 
-    # Content slide definitions with individual layout types
-    lbl_exp1 = random.choice([f"Preparation for {o1['company']}", f"Skill Alignment for {o1['company']}", f"Target Assets for {o1['company']}", f"Qualifications for {o1['company']}"])
-    lbl_exp2 = random.choice([f"Preparation for {o2['company']}", f"Skill Alignment for {o2['company']}", f"Target Assets for {o2['company']}", f"Qualifications for {o2['company']}"])
+    # Experience Slide Variants (Company alignment vs Volunteer/Placement vs Capstone Milestones)
+    exp_variant = random.choice(["company_align", "vol_placement", "capstone_assets"])
     
+    if exp_variant == "vol_placement":
+        lbl_exp1 = f"Community Leadership: {d['experience']['volunteer_org']}"
+        lbl_exp2 = f"Industry Exposure: {d['experience']['placement_org']}"
+        exp_left = [(True, lbl_exp1, None), (False, d['experience']['volunteer_role'], None)] + [(False, b, b_exp) for b in d['experience']['volunteer_bullets']]
+        exp_right = [(True, lbl_exp2, None), (False, d['experience']['placement_role'], None)] + [(False, b, b_exp) for b in d['experience']['placement_bullets']]
+    elif exp_variant == "capstone_assets":
+        lbl_exp1 = "Capstone Project Technical Assets"
+        lbl_exp2 = "Applied Fieldwork & Audit Milestones"
+        exp_left = [(True, lbl_exp1, None), (False, d['education']['project'], None), (False, f"Specialization: {d['education']['specialization']}", b_exp), (False, f"Academic Standing: {d['education']['academic_standing']}", b_exp)]
+        exp_right = [(True, lbl_exp2, None), (False, f"Coursework: {d['education']['coursework']}", b_exp), (False, f"University: {d['education']['university']}", b_exp)]
+    else:
+        lbl_exp1 = random.choice([f"Preparation for {o1['company']}", f"Skill Alignment for {o1['company']}", f"Target Assets for {o1['company']}", f"Qualifications for {o1['company']}"])
+        lbl_exp2 = random.choice([f"Preparation for {o2['company']}", f"Skill Alignment for {o2['company']}", f"Target Assets for {o2['company']}", f"Qualifications for {o2['company']}"])
+        exp_left = [(True, lbl_exp1, None)] + [(False, e, b_exp) for e in o1['my_experience']]
+        exp_right = [(True, lbl_exp2, None)] + [(False, e, b_exp) for e in o2['my_experience']]
+
     exp_slide = {
         "t": t_exp,
-        "l": [(True, lbl_exp1, None)] + [(False, e, b_exp) for e in o1['my_experience']],
-        "r": [(True, lbl_exp2, None)] + [(False, e, b_exp) for e in o2['my_experience']],
+        "l": exp_left,
+        "r": exp_right,
         "layout": exp_layout
     }
     
@@ -334,7 +349,11 @@ def gen_pptx(name, d, lang):
 
     slide_content = [opps_slide, skills_slide, exp_slide, steps_slide]
     
-    # 4. Apply Column Order Swapping dynamically per slide (50% chance)
+    # 4. Dynamically shuffle slide sequence order across decks (50% chance)
+    if random.choice([True, False]):
+        random.shuffle(slide_content)
+        
+    # 5. Apply Column Order Swapping dynamically per slide (50% chance)
     for s_dict in slide_content:
         if random.choice([True, False]):
             s_dict["l"], s_dict["r"] = s_dict["r"], s_dict["l"]
