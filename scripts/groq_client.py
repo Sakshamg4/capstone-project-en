@@ -554,14 +554,22 @@ def generate_content(name, email, country, lang="en"):
     section_skill = imp_skills[1] if len(imp_skills) > 1 else "technical report writing"
 
     imp_templates = [
+        # Format 1: Classic Numbered List
         lambda: f"1. Refined the professional summary to highlight specialized skills in {profile_skill}. 2. Expanded technical proficiencies with {section_skill} and analytical tools. 3. Embedded link to my updated LinkedIn portfolio.",
-        lambda: f"1. Added a tailored career summary emphasizing core strengths in {profile_skill}. 2. Re-structured the skills section to highlight {section_skill} and simulation software. 3. Integrated a direct link to my LinkedIn profile.",
-        lambda: f"1. Formulated an executive summary centered on {profile_skill} and sustainable technology. 2. Updated key competencies including {section_skill} and field methodologies. 3. Connected my verified LinkedIn profile link.",
-        lambda: f"1. Rewrote the profile statement to align directly with {profile_skill} requirements. 2. Highlighted practical project achievements in {section_skill}. 3. Added a clean hyperlink to my professional LinkedIn profile.",
-        lambda: f"1. Tailored the personal summary around {profile_skill} and renewable energy systems. 2. Upgraded the skills list with {section_skill} and data analytics frameworks. 3. Added an optimized LinkedIn profile link.",
-        lambda: f"1. Streamlined the intro summary to showcase qualifications in {profile_skill}. 2. Enhanced the technical section by adding {section_skill} and SCADA tools. 3. Included an active link to my LinkedIn profile.",
-        lambda: f"1. Restructured the summary statement to focus on {profile_skill} and decarbonization. 2. Highlighted academic coursework accomplishments in {section_skill}. 3. Linked my updated LinkedIn profile at the top.",
-        lambda: f"1. Updated the summary section to spotlight expertise in {profile_skill}. 2. Grouped hard and soft skills, adding {section_skill}. 3. Provided an embedded link to my complete LinkedIn profile."
+        # Format 2: Sequential Narrative (First, Next, Finally)
+        lambda: f"First, I created a tailored professional summary highlighting my expertise in {profile_skill}. Next, I updated my skills section to include {section_skill} alongside data analysis tools. Finally, I integrated a direct link to my optimized LinkedIn profile.",
+        # Format 3: Bullet Point Symbols
+        lambda: f"• Profile: Added a strong career summary focusing on {profile_skill}. • Skills: Expanded technical competencies with {section_skill} and simulation software. • Network: Embedded a clean hyperlink to my professional LinkedIn profile.",
+        # Format 4: Action-Driven Paragraph
+        lambda: f"I updated my professional summary to emphasize core competencies in {profile_skill}. Additionally, I expanded the skills section with {section_skill} and analytical frameworks, while linking my verified LinkedIn profile at the top.",
+        # Format 5: Alternative Numbered List
+        lambda: f"1. Tailored the personal summary around {profile_skill} and renewable energy systems. 2. Upgraded the skills list with {section_skill} and SCADA telemetry tools. 3. Added an optimized LinkedIn profile link for employer review.",
+        # Format 6: Transition Words Narrative
+        lambda: f"To begin, I restructured my introductory summary to showcase qualifications in {profile_skill}. Secondly, I enhanced my technical section by incorporating {section_skill}. Lastly, I included an active web link to my LinkedIn profile.",
+        # Format 7: Category Pipe Separated
+        lambda: f"Summary Update: Highlighted key competencies in {profile_skill}. | Technical Skills: Added {section_skill} and environmental monitoring. | Profile Integration: Embedded direct link to my LinkedIn page.",
+        # Format 8: Reflective Statement
+        lambda: f"I strengthened my CV by spotlighting specialized knowledge in {profile_skill} in the summary. I also reorganized my hard and soft skills to include {section_skill}, and added a direct link to my LinkedIn profile."
     ]
     cv_improvements = random.choice(imp_templates)()
 
