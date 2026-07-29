@@ -385,14 +385,17 @@ def gen_pptx(name, d, lang):
         swtf = [(s, s.text_frame) for s in sl.shapes if s.has_text_frame]
         swtf.sort(key=lambda x: (x[0].top, x[0].left))
         
-        if len(swtf) >= 3:
-            # Title positioning and text replacement
-            tf = swtf[0][1]; tf.clear()
-            r = tf.paragraphs[0].add_run(); r.text = c["t"]
-            r.font.size = Pt(20); r.font.bold = True; r.font.name = "Arial"; r.font.color.rgb = db
+        if len(swtf) >= 1:
+            sh_title, tf_title = swtf[0]
+            tf_title.clear()
+            r = tf_title.paragraphs[0].add_run()
+            r.text = c["t"]
+            r.font.size = Pt(20)
+            r.font.bold = True
+            r.font.name = "Arial"
+            r.font.color.rgb = db
             
-            # Reset bullet settings for slide titles
-            pPr = tf.paragraphs[0]._p.get_or_add_pPr()
+            pPr = tf_title.paragraphs[0]._p.get_or_add_pPr()
             for tag in ["buChar", "buNone", "buAutoNum", "buBlip"]:
                 el = pPr.find("{http://schemas.openxmlformats.org/drawingml/2006/main}" + tag)
                 if el is not None:
@@ -401,52 +404,39 @@ def gen_pptx(name, d, lang):
             pPr.set("marL", "0")
             pPr.set("indent", "0")
 
-            bs = sorted(swtf[1:], key=lambda x: x[0].left)
-            if len(bs) >= 2:
-                s1, s2 = bs[0][0], bs[1][0]
-                cur_layout = c["layout"]
-                
-                # Record the layout sequence for this specific slide
-                layout_sequence.append(f"L{cur_layout}")
-                
-                # Delete old placeholder shapes to prevent master slide styling overrides
-                sl.shapes._element.remove(s1._element)
-                sl.shapes._element.remove(s2._element)
-                
-                if cur_layout == 1:
-                    # Side-by-side Columns
-                    tb1 = sl.shapes.add_textbox(left_x, top_y, col_w, height_y)
-                    tb2 = sl.shapes.add_textbox(right_x, top_y, col_w, height_y)
-                    fill_tf(tb1.text_frame, c["l"])
-                    fill_tf(tb2.text_frame, c["r"])
-                    
-                elif cur_layout == 2:
-                    # Top-and-Bottom Split (Vertical Stack)
-                    tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, 1600000)
-                    tb2 = sl.shapes.add_textbox(left_x, 2900000, full_w, 1600000)
-                    fill_tf(tb1.text_frame, c["l"])
-                    fill_tf(tb2.text_frame, c["r"])
-                    
-                elif cur_layout == 3:
-                    # Single Column Full-Width
-                    tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, height_y)
-                    # Merge content from both columns
-                    merged = c["l"] + [(True, "", None)] + c["r"]
-                    fill_tf(tb1.text_frame, merged)
-                    
-                elif cur_layout == 4:
-                    # Asymmetric (Left Highlight / Right List)
-                    tb1 = sl.shapes.add_textbox(left_x, top_y, 2800000, height_y)
-                    tb2 = sl.shapes.add_textbox(3400000, top_y, 5432000, height_y)
-                    fill_tf(tb1.text_frame, c["l"])
-                    fill_tf(tb2.text_frame, c["r"])
-                    
-                else:
-                    # Asymmetric (Left List / Right Highlight)
-                    tb1 = sl.shapes.add_textbox(left_x, top_y, 5432000, height_y)
-                    tb2 = sl.shapes.add_textbox(6032300, top_y, 2800000, height_y)
-                    fill_tf(tb1.text_frame, c["l"])
-                    fill_tf(tb2.text_frame, c["r"])
+            for sh_old, _ in swtf[1:]:
+                try: sl.shapes._element.remove(sh_old._element)
+                except: pass
+
+        cur_layout = c["layout"]
+        layout_sequence.append(f"L{cur_layout}")
+        
+        if cur_layout == 3:
+            # Single Column Full-Width Hero Card
+            tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, height_y)
+            merged = c["l"] + ([(True, "", None)] + c["r"] if c["r"] else [])
+            fill_tf(tb1.text_frame, merged)
+            
+        elif cur_layout == 2:
+            # Top-and-Bottom Split (Vertical Stack)
+            tb1 = sl.shapes.add_textbox(left_x, top_y, full_w, 1600000)
+            tb2 = sl.shapes.add_textbox(left_x, 2900000, full_w, 1600000)
+            fill_tf(tb1.text_frame, c["l"])
+            fill_tf(tb2.text_frame, c["r"] if c["r"] else c["l"])
+            
+        elif cur_layout == 4:
+            # Asymmetric (Left Highlight / Right List)
+            tb1 = sl.shapes.add_textbox(left_x, top_y, 2800000, height_y)
+            tb2 = sl.shapes.add_textbox(3400000, top_y, 5432000, height_y)
+            fill_tf(tb1.text_frame, c["l"])
+            fill_tf(tb2.text_frame, c["r"] if c["r"] else c["l"])
+            
+        else:
+            # Asymmetric (Left List / Right Highlight)
+            tb1 = sl.shapes.add_textbox(left_x, top_y, 5432000, height_y)
+            tb2 = sl.shapes.add_textbox(6032300, top_y, 2800000, height_y)
+            fill_tf(tb1.text_frame, c["l"])
+            fill_tf(tb2.text_frame, c["r"] if c["r"] else c["l"])
     
     # Clean metadata - set author to user
     prs.core_properties.author = name
