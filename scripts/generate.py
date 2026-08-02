@@ -4,6 +4,7 @@ Capstone Generator V2 — EN/FR templates, Groq AI, 100+ CV layouts
 Usage: python generate.py "Name" "email" "Country" "fr|en"
 """
 import os, sys, json, random
+from datetime import datetime
 from pathlib import Path
 
 try:
@@ -78,13 +79,14 @@ def gen_pptx(name, d, lang):
     steps_layout = random.choice([1, 2, 3, 4, 5])
     
     # Slide 0: Title — replace Name and Date
+    curr_month_year = datetime.now().strftime("%B %Y")
     for sh in prs.slides[0].shapes:
         if sh.has_text_frame:
             for p in sh.text_frame.paragraphs:
                 for r in p.runs:
                     t = r.text.strip()
                     if t == "Name": r.text = name
-                    elif t == "Date": r.text = "July 2026"
+                    elif t == "Date": r.text = curr_month_year
     
     db = RGBColor(0x1B, 0x3C, 0x6D)
 
